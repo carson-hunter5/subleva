@@ -31,7 +31,7 @@ def MigrantHomeNav():
 
 #### ------------------------ Examples for Role of City Council ------------------------
 
-def CityCouncilNavH():
+def CityCouncilNav():
     st.sidebar.page_link("pages/20_City_Council_Home.py", label="City Council Home", icon='🛜')
 
 #def AdminPageNav():
@@ -67,12 +67,12 @@ def SideBarLinks(show_home=False):
             MapDemoNav()
 
         # If the user role is usaid worker, show the Api Testing page
-        if st.session_state['role'] == 'migrant':
-            ClassificationNav()
+       # if st.session_state['role'] == 'migrant':
+            # ClassificationNav()
         
         # If the user is an administrator, show them their corresponding pages
         if st.session_state['role'] == 'city_council':
-            AdminPageNav()
+            CityCouncilNav()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
