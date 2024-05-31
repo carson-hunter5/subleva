@@ -21,7 +21,7 @@ if st.button("Act as Jackson Davies, a Senior Immigration Official",
     st.session_state['authenticated'] = True 
     st.session_state['role'] = 'immigration_officer'
     st.session_state['first_name'] = 'Jackson' 
-    st.switch_page('pages/00_Immigration_Official_Home.py') 
+    st.switch_page('pages/00_Immigration_Official.py') 
 
 if st.button('Act as Hugo Diallo, a Migrant', 
             type = 'primary', 
