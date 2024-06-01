@@ -10,8 +10,8 @@ def AboutPageNav():
     st.sidebar.page_link("pages/About.py", label="About", icon="🧠")
 
 #### ------------------------ Examples for Role of Immigration Official ------------------------
-def PolStratAdvHomeNav():
-    st.sidebar.page_link("pages/00_Immigration_Official.py", label="Immigration Home", icon='👤')
+def ImmigrationHomeNav():
+    st.sidebar.page_link("pages/00_Immigration_Official.py", label="Home", icon='👤')
 
 def WorldBankVizNav():
     st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon='🏦')
@@ -19,30 +19,48 @@ def WorldBankVizNav():
 def MapDemoNav():
     st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon='🗺️')
 
+def AsylumApplicationNav():
+    st.sidebar.page_link("pages/02_Asylum_Application.py", label="Asylum Application Map", icon='🗺️')
+
+def AsylumStatisticsNav():
+    st.sidebar.page_link("pages/03_Asylum_Statistics.py", label="Asylum Statistics", icon='🗺️')
+
 ## ------------------------ Examples for Role of Migrant ------------------------
 def MigrantHomeNav():
-    st.sidebar.page_link("pages/10_Migrant_Home.py", label="Migrant", icon='🛜')
+    st.sidebar.page_link("pages/10_Migrant_Home.py", label="Home", icon='🛜')
 
-#def PredictionNav():
-   # st.sidebar.page_link("pages/11_Prediction.py", label="Regression Prediction", icon='📈')
+def AppointmentsNav():
+    st.sidebar.page_link("pages/11_Appointments.py", label="Appointments", icon='🌺')
 
-#def ClassificationNav():
-    #st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
+def CommunityEventsNav():
+    st.sidebar.page_link("pages/12_Community.py", label="Community Events", icon='🏦')
+
+def BulletinBoardNav():
+    st.sidebar.page_link("pages/13_Bulletin.py", label='Community Bulletin Board', icon='🏢')
+
+def ClassificationNav():
+    st.sidebar.page_link("pages/06_Classification.py", label="Classification Demo", icon='🌺')
 
 #### ------------------------ Examples for Role of City Council ------------------------
 
-def CityCouncilNav():
-    st.sidebar.page_link("pages/20_City_Council_Home.py", label="City Council Home", icon='🛜')
+def CityCouncilHomeNav():
+    st.sidebar.page_link("pages/20_City_Council_Home.py", label="Home", icon='🛜')
 
-#def AdminPageNav():
-    #st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
-    #st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
+def AppointmentConfirmationNav():
+    st.sidebar.page_link("pages/21_Appointment_Confirmation.py", label='Appointment Book', icon='🏢')
+
+def CommunityEventsNav():
+    st.sidebar.page_link("pages/22_Community_Creation.py", label='Event Book', icon='🏢')
+
+def ChatBotNav():
+    st.sidebar.page_link("pages/03_Simple_Chat_Bot.py", label='ML Model Management', icon='🏢')
 
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
     """
-    This function handles adding links to the sidebar of the app based upon the logged-in user's role, which was put in the streamlit session_state object when logging in. 
+    This function handles adding links to the sidebar of the app based upon the logged-in user's role,
+    which was put in the streamlit session_state object when logging in. 
     """    
 
     # add a logo to the sidebar always
@@ -60,19 +78,28 @@ def SideBarLinks(show_home=False):
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
+        # Show [insert pages here] if the user is a immigration officer.
         if st.session_state['role'] == 'immigration_officer':
-            PolStratAdvHomeNav()
+            ImmigrationHomeNav()
+            AsylumApplicationNav()
+            AsylumStatisticsNav()
             WorldBankVizNav()
             MapDemoNav()
 
-        # If the user role is usaid worker, show the Api Testing page
-       # if st.session_state['role'] == 'migrant':
-            # ClassificationNav()
+        # If the user role is migrant, show the [insert pages here] 
+        if st.session_state['role'] == 'migrant':
+            MigrantHomeNav()
+            AppointmentsNav()
+            BulletinBoardNav()
+            CommunityEventsNav()
+            ClassificationNav()
         
-        # If the user is an administrator, show them their corresponding pages
+        # If the user is an city council member, show them [insert pages here] 
         if st.session_state['role'] == 'city_council':
-            CityCouncilNav()
+            CityCouncilHomeNav()
+            AppointmentConfirmationNav()
+            CommunityEventsNav()
+            ChatBotNav()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
