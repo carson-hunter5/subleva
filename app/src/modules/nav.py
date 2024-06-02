@@ -13,6 +13,9 @@ def AboutPageNav():
 def ImmigrationHomeNav():
     st.sidebar.page_link("pages/00_Immigration_Official.py", label="Home", icon='👤')
 
+def PopulationNav():
+    st.sidebar.page_link("pages/01_Population.py", label="Population Statistics Map", icon='🗺️')
+
 def WorldBankVizNav():
     st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon='🏦')
 
@@ -83,6 +86,7 @@ def SideBarLinks(show_home=False):
             ImmigrationHomeNav()
             AsylumApplicationNav()
             AsylumStatisticsNav()
+            PopulationNav()
             WorldBankVizNav()
             MapDemoNav()
 
