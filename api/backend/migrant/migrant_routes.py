@@ -26,7 +26,7 @@ def get_migrant(migrantID):
 """
 # Get all appointments from the database for a specifc migrant
 @migrant.route('/migrant/appointments', methods=['GET'])
-def get_events(migrantID):
+def get_appointments(migrantID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
