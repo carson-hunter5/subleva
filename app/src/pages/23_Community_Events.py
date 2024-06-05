@@ -1,20 +1,20 @@
-
-
 import streamlit as st
 import requests
 from streamlit_extras.app_logo import add_logo
-
 
 
 st.set_page_config (page_title="API Test", page_icon="🙏")
 
 add_logo("assets/logo.png", height=400)
 
-# set the header of the page
-st.header('All Community Events')
-st.write("Displaying all community events ever created by all city council")
+st.write("Displaying all community events")
 
+"""
+Simply retrieving data from a REST api running in a separate Docker Container.
 
+If the container isn't running, this will be very unhappy.  But the Streamlit app 
+should not totally die. 
+"""
 data = {} 
 try:
   data = requests.get('http://api:4000/c/city_council').json()

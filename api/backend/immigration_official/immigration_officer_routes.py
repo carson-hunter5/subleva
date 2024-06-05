@@ -41,7 +41,7 @@ def get_countryStats():
     return the_response
 
 # Creates a new country stat for a country
-@immigration_official.route('/immigration_official', methods=['POST'])
+@immigration_official.route('/immigration_official/newStat', methods=['POST'])
 def add_countryStat():
     
     # collecting data from the request object 
@@ -80,9 +80,9 @@ def add_countryStat():
 
 
 # Edit the country stat 
-@immigration_official.route('/immigration_official/countryStat', methods=['PUT'])
+@immigration_official.route('/immigration_official/editCountryStat', methods=['PUT'])
 def update_countryStat():
-    current_app.logger.info('PUT /immigration_official route')
+    current_app.logger.info('PUT /immigration_official/editCountryStat route')
     stat_info = request.json
     year = stat_info['year']
     numApplications = stat_info['numApplications']
@@ -100,9 +100,9 @@ def update_countryStat():
     return 'Country Stat updated!'
 
 # Delete the country stat
-@immigration_official.route('/immigration_official/countryStat/<countryID>', methods=['DELETE'])
+@immigration_official.route('/immigration_official/deleteCountryStat', methods=['DELETE'])
 def delete_event(countryID):
-    current_app.logger.info('DELETE /immigration_official/countryStat/<countryID> route')
+    current_app.logger.info('DELETE /immigration_official/deleteCountryStat route')
     
     query = 'DELETE FROM countryStat WHERE countryID = {0}'.format(countryID)
     cursor = db.get_db().cursor()
@@ -113,9 +113,9 @@ def delete_event(countryID):
 
 
 # Get number of applications for a specific country at a given year 
-@immigration_official.route('/countryStats/<year>/<numApplications>', methods=['GET'])
+@immigration_official.route('/immigration_official/numApplications', methods=['GET'])
 def get_applications_per_year(countryID):
-    current_app.logger.info('GET /countryStats/<year>/<numApplications> route')
+    current_app.logger.info('GET /immigration_official/numApplications route')
     cursor = db.get_db().cursor()
     cursor.execute('select year, numApplications from countryStats where countryID = {0}'.format(countryID))
     row_headers = [x[0] for x in cursor.description]
@@ -129,9 +129,9 @@ def get_applications_per_year(countryID):
     return the_response
 
 # Get overall trend of applications for a specific country at a given year 
-@immigration_official.route('/countryStats/<year>/<numApplications>/<numRejected>/<numGranted>/<numOther>/<numClosed>,/<population>', methods=['GET'])
+@immigration_official.route('/immigration_official/applicationTrends', methods=['GET'])
 def get_trends_per_year(countryID):
-    current_app.logger.info('GET /countryStats/<year>/<numApplications>/<numRejected>/<numGranted>/<numOther>/<numClosed>,/<population> route')
+    current_app.logger.info('GET /immigration_official/applicationTrends route')
     cursor = db.get_db().cursor()
     cursor.execute('select year, numApplications, numRejected, numGranted, numOther, numClosed, population from countryStats where countryID = {0}'.format(countryID))
     row_headers = [x[0] for x in cursor.description]
