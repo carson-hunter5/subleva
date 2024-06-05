@@ -25,13 +25,13 @@ def get_migrant(migrantID):
 
 """
 # Get all appointments from the database for a specifc migrant
-@migrant.route('/migrant/appointments', methods=['GET'])
+@migrant.route('/migrant/appointments/<migrantID>', methods=['GET'])
 def get_appointments(migrantID):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('select migrantID from appointments where migrantID = {0}'.format(migrantID))
+    cursor.execute(f"""SELECT appointmentID, volunteerID, date FROM appointments WHERE migrantID = {migrantID}""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -50,6 +50,30 @@ def get_appointments(migrantID):
 
     return jsonify(json_data)
 
+@migrant.route('/migrant/show_appt/<apptID>', methods=['GET'])
+def get_appt(apptID):
+    # get a cursor object from the database
+    cursor = db.get_db().cursor()
+
+    # use cursor to query the database for a list of products
+    cursor.execute(f"""SELECT appointmentID, volunteerID, date FROM appointments WHERE appointmentID= {apptID}""")
+
+    # grab the column headers from the returned data
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
 
 # Creates a new appointment for a migrant
 @migrant.route('/migrant', methods=['POST'])
@@ -99,20 +123,43 @@ def update_migrant_appointment():
     return 'appointment updated!'
 
 # Delete the appointment for a specifc migrant
-@migrant.route('/migrant/appointment/<appointmentID>', methods=['DELETE'])
+@migrant.route('/migrant/appointment_delete/<appointmentID>', methods=['DELETE'])
 def delete_migrant_appointment(appointmentID):
     current_app.logger.info('DELETE /migrant/appointment/<appointmentID> route')
-    
-    query = 'DELETE FROM appointments WHERE appointmentID = {0}'.format(appointmentID)
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(f"""DELETE FROM appointments WHERE appointmentID = {appointmentID}""")
     db.get_db().commit()
-    
-    return 'Appointment deleted!'
-
 
 #Posts
 # Get all posts from the database for a specific migrant
+@migrant.route('/migrant/posts', methods=['GET'])
+def get_posts():
+
+    # get a cursor object from the database
+    cursor = db.get_db().cursor()
+
+    # use cursor to query the database for a list of products
+    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt ASC LIMIT 7')
+
+    # grab the column headers from the returned data
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
+
+
+
 @migrant.route('/migrant/<migrantID>', methods=['GET'])
 def get_post(migrantID):
     current_app.logger.info('GET /posts/<migrantID> route')
@@ -129,7 +176,7 @@ def get_post(migrantID):
     return the_response
 
 # Creates a new post for a migrant
-@migrant.route('/migrant/post', methods=['POST'])
+@migrant.route('/migrant/post/<postID>,<postContent>,<displayName>, <migrantID>', methods=['POST'])
 def add_new_post():
     
     # collecting data from the request object 
