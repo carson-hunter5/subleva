@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
+""""
+from backend.ml_models.model01 import predict
+"""
 
 immigration_official = Blueprint('immigration official', __name__)
 
@@ -143,3 +146,20 @@ def get_trends_per_year(countryID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+""""
+@immigration_official.route('/prediction/<var01>/<var02>/<var03>/<var04>', methods=['GET'])
+def predict_value(var01, var02, var03, var04):
+    current_app.logger.info(f'var01 = {var01}')
+    current_app.logger.info(f'var02 = {var02}')
+    current_app.logger.info(f'var03 = {var03}')
+    current_app.logger.info(f'var04 = {var04}')
+
+    returnVal = predict(var01, var02, var03, var04)
+    return_dict = {'result': returnVal}
+
+    the_response = make_response(jsonify(return_dict))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+"""

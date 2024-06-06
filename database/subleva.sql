@@ -2362,10 +2362,10 @@ INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('149', '5');
 INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('705', '25');
 INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('758', '22');
 
-CREATE TABLE IF NOT EXISTS model1_beta_vals (
-    params LONGTEXT
+CREATE TABLE IF NOT EXISTS model1_params (
+    beta_vals LONGTEXT
 );
-INSERT INTO model1_beta_vals (params) VALUES ('array([ 0.00657606, -1.77841744, -1.2832241 , -2.12463282, -2.33197343,
+INSERT INTO model1_params (beta_vals) VALUES ('[ 0.00657606, -1.77841744, -1.2832241 , -2.12463282, -2.33197343,
        -2.18232304, -1.6609086 , -1.26502699, -2.04542162, -2.27506478,
        -2.2812903 , -1.26957965, -2.05973826, -1.32056226,  0.28477442,
        -2.10320113, -1.75817804, -2.2829184 , -2.03031371, -1.35753525,
@@ -2403,4 +2403,198 @@ INSERT INTO model1_beta_vals (params) VALUES ('array([ 0.00657606, -1.77841744, 
        -1.33945118, -2.28598868,  0.93840192, -2.14141969, -1.74854516,
        -1.40999911, -2.13236155, -1.7600597 , -2.29060771,  0.09955894,
        -0.1761455 , -0.86527773,  0.06847763,  0.10816341,  0.74590844,
-        0.1248014 , -0.12657619]')
+        0.1248014 , -0.12657619]');
+
+DROP TABLE IF EXISTS country_table;
+CREATE TABLE country_table (
+  index_num BIGINT,
+  country VARCHAR(1024)
+);
+
+INSERT INTO country_table (index_num, country) VALUES (0, 'Albania');
+INSERT INTO country_table (index_num, country) VALUES (1,'Algeria');
+INSERT INTO country_table (index_num, country) VALUES(2,'Angola');
+INSERT INTO country_table (index_num, country) VALUES (3,'Anguilla');
+INSERT INTO country_table (index_num, country) VALUES (4,'Antigua and Barbuda');
+INSERT INTO country_table (index_num, country) VALUES (5,'Argentina');
+INSERT INTO country_table (index_num, country) VALUES (6,'Armenia');
+INSERT INTO country_table (index_num, country) VALUES (7,'Aruba');
+INSERT INTO country_table (index_num, country) VALUES (8,'Australia');
+INSERT INTO country_table (index_num, country) VALUES (9,'Austria');
+INSERT INTO country_table (index_num, country) VALUES (10,'Azerbaijan');
+INSERT INTO country_table (index_num, country) VALUES (11,'Bahamas');
+INSERT INTO country_table (index_num, country) VALUES (12,'Bahrain');
+INSERT INTO country_table (index_num, country) VALUES (13,'Bangladesh');
+INSERT INTO country_table (index_num, country) VALUES (14,'Barbados');
+INSERT INTO country_table (index_num, country) VALUES (15,'Belarus');
+INSERT INTO country_table (index_num, country) VALUES (16,'Belgium');
+INSERT INTO country_table (index_num, country) VALUES (17,'Belize');
+INSERT INTO country_table (index_num, country) VALUES (18,'Benin');
+INSERT INTO country_table (index_num, country) VALUES (19,'Bolivia, Plurinational State of)');
+INSERT INTO country_table (index_num, country) VALUES (20,'Bosnia and Herzegovina');
+INSERT INTO country_table (index_num, country) VALUES (21,'Botswana');
+INSERT INTO country_table (index_num, country) VALUES (22,'Brazil');
+INSERT INTO country_table (index_num, country) VALUES (23,'Brunei Darussalam');
+INSERT INTO country_table (index_num, country) VALUES (24,'Bulgaria');
+INSERT INTO country_table (index_num, country) VALUES (25,'Burkina Faso');
+INSERT INTO country_table (index_num, country) VALUES (26,'Burundi');
+INSERT INTO country_table (index_num, country) VALUES (27,'Cabo Verde');
+INSERT INTO country_table (index_num, country) VALUES (28,'Cambodia');
+INSERT INTO country_table (index_num, country) VALUES (29,'Cameroon');
+INSERT INTO country_table (index_num, country) VALUES (30,'Canada');
+INSERT INTO country_table (index_num, country) VALUES (31,'Cayman Islands');
+INSERT INTO country_table (index_num, country) VALUES (32,'Central African Rep.');
+INSERT INTO country_table (index_num, country) VALUES (33,'Chad');
+INSERT INTO country_table (index_num, country) VALUES (34,'Chile');
+INSERT INTO country_table (index_num, country) VALUES (35,'China');
+INSERT INTO country_table (index_num, country) VALUES (36,'China, Hong Kong SAR');
+INSERT INTO country_table (index_num, country) VALUES (37,'China, Macao SAR');
+INSERT INTO country_table (index_num, country) VALUES (38,'Colombia');
+INSERT INTO country_table (index_num, country) VALUES (39,'Comoros');
+INSERT INTO country_table (index_num, country) VALUES (40,'Congo');
+INSERT INTO country_table (index_num, country) VALUES (41,'Costa Rica');
+INSERT INTO country_table (index_num, country) VALUES (42,'Cote d''Ivoire');
+INSERT INTO country_table (index_num, country) VALUES (43,'Croatia');
+INSERT INTO country_table (index_num, country) VALUES (44,'Cuba');
+INSERT INTO country_table (index_num, country) VALUES (45,'Curacao');
+INSERT INTO country_table (index_num, country) VALUES (46,'Cyprus');
+INSERT INTO country_table (index_num, country) VALUES (47,'Czechia');
+INSERT INTO country_table (index_num, country) VALUES (48,'Dem. Rep. of the Congo');
+INSERT INTO country_table (index_num, country) VALUES (49,'Denmark');
+INSERT INTO country_table (index_num, country) VALUES (50,'Djibouti');
+INSERT INTO country_table (index_num, country) VALUES (51,'Dominican Rep.');
+INSERT INTO country_table (index_num, country) VALUES (52,'Ecuador');
+INSERT INTO country_table (index_num, country) VALUES (53,'Egypt');
+INSERT INTO country_table (index_num, country) VALUES (54,'El Salvador');
+INSERT INTO country_table (index_num, country) VALUES (55,'Eritrea');
+INSERT INTO country_table (index_num, country) VALUES (56,'Estonia');
+INSERT INTO country_table (index_num, country) VALUES (57,'Eswatini');
+INSERT INTO country_table (index_num, country) VALUES (58,'Ethiopia');
+INSERT INTO country_table (index_num, country) VALUES (59,'Fiji');
+INSERT INTO country_table (index_num, country) VALUES (60,'Finland');
+INSERT INTO country_table (index_num, country) VALUES (61,'France');
+INSERT INTO country_table (index_num, country) VALUES (62,'Gabon');
+INSERT INTO country_table (index_num, country) VALUES (63,'Gambia');
+INSERT INTO country_table (index_num, country) VALUES (64,'Georgia');
+INSERT INTO country_table (index_num, country) VALUES (65,'Germany');
+INSERT INTO country_table (index_num, country) VALUES (66,'Ghana');
+INSERT INTO country_table (index_num, country) VALUES (67,'Greece');
+INSERT INTO country_table (index_num, country) VALUES (68,'Grenada');
+INSERT INTO country_table (index_num, country) VALUES (69,'Guatemala');
+INSERT INTO country_table (index_num, country) VALUES (70,'Guinea');
+INSERT INTO country_table (index_num, country) VALUES (71,'Guinea-Bissau');
+INSERT INTO country_table (index_num, country) VALUES (72,'Guyana');
+INSERT INTO country_table (index_num, country) VALUES (73,'Haiti');
+INSERT INTO country_table (index_num, country) VALUES (74,'Honduras');
+INSERT INTO country_table (index_num, country) VALUES (75,'Hungary');
+INSERT INTO country_table (index_num, country) VALUES (76,'Iceland');
+INSERT INTO country_table (index_num, country) VALUES (77,'India');
+INSERT INTO country_table (index_num, country) VALUES (78,'Indonesia');
+INSERT INTO country_table (index_num, country) VALUES (79,'Iran, Islamic Rep. of)');
+INSERT INTO country_table (index_num, country) VALUES (80,'Iraq');
+INSERT INTO country_table (index_num, country) VALUES (81,'Ireland');
+INSERT INTO country_table (index_num, country) VALUES (82,'Israel');
+INSERT INTO country_table (index_num, country) VALUES (83,'Italy');
+INSERT INTO country_table (index_num, country) VALUES (84,'Jamaica');
+INSERT INTO country_table (index_num, country) VALUES (85,'Japan');
+INSERT INTO country_table (index_num, country) VALUES (86,'Jordan');
+INSERT INTO country_table (index_num, country) VALUES (87,'Kazakhstan');
+INSERT INTO country_table (index_num, country) VALUES (88,'Kenya');
+INSERT INTO country_table (index_num, country) VALUES (89,'Kuwait');
+INSERT INTO country_table (index_num, country) VALUES (90,'Kyrgyzstan');
+INSERT INTO country_table (index_num, country) VALUES (91,'Latvia');
+INSERT INTO country_table (index_num, country) VALUES (92,'Lebanon');
+INSERT INTO country_table (index_num, country) VALUES (93,'Lesotho');
+INSERT INTO country_table (index_num, country) VALUES (94,'Liberia');
+INSERT INTO country_table (index_num, country) VALUES (95,'Libya');
+INSERT INTO country_table (index_num, country) VALUES (96,'Liechtenstein');
+INSERT INTO country_table (index_num, country) VALUES (97,'Lithuania');
+INSERT INTO country_table (index_num, country) VALUES (98,'Luxembourg');
+INSERT INTO country_table (index_num, country) VALUES (99,'Madagascar');
+INSERT INTO country_table (index_num, country) VALUES (100,'Malawi');
+INSERT INTO country_table (index_num, country) VALUES (101,'Malaysia');
+INSERT INTO country_table (index_num, country) VALUES (102,'Mali');
+INSERT INTO country_table (index_num, country) VALUES (103,'Malta');
+INSERT INTO country_table (index_num, country) VALUES (104,'Mauritania');
+INSERT INTO country_table (index_num, country) VALUES (105,'Mauritius');
+INSERT INTO country_table (index_num, country) VALUES (106,'Mexico');
+INSERT INTO country_table (index_num, country) VALUES (107,'Micronesia, Federated States of');
+INSERT INTO country_table (index_num, country) VALUES (108,'Monaco');
+INSERT INTO country_table (index_num, country) VALUES (109,'Mongolia');
+INSERT INTO country_table (index_num, country) VALUES (110,'Montenegro');
+INSERT INTO country_table (index_num, country) VALUES (111,'Montserrat');
+INSERT INTO country_table (index_num, country) VALUES (112,'Morocco');
+INSERT INTO country_table (index_num, country) VALUES (113,'Mozambique');
+INSERT INTO country_table (index_num, country) VALUES (114,'Myanmar');
+INSERT INTO country_table (index_num, country) VALUES (115,'Namibia');
+INSERT INTO country_table (index_num, country) VALUES (116,'Nauru');
+INSERT INTO country_table (index_num, country) VALUES (117,'Nepal');
+INSERT INTO country_table (index_num, country) VALUES (118,'Netherlands, Kingdom of the');
+INSERT INTO country_table (index_num, country) VALUES (119,'New Zealand');
+INSERT INTO country_table (index_num, country) VALUES (120,'Nicaragua');
+INSERT INTO country_table (index_num, country) VALUES (121,'Niger');
+INSERT INTO country_table (index_num, country) VALUES (122,'Nigeria');
+INSERT INTO country_table (index_num, country) VALUES (123,'North Macedonia');
+INSERT INTO country_table (index_num, country) VALUES (124,'Norway');
+INSERT INTO country_table (index_num, country) VALUES (125,'Oman');
+INSERT INTO country_table (index_num, country) VALUES (126,'Pakistan');
+INSERT INTO country_table (index_num, country) VALUES (127,'Panama');
+INSERT INTO country_table (index_num, country) VALUES (128,'Papua New Guinea');
+INSERT INTO country_table (index_num, country) VALUES (129,'Paraguay');
+INSERT INTO country_table (index_num, country) VALUES (130,'Peru');
+INSERT INTO country_table (index_num, country) VALUES (131,'Philippines');
+INSERT INTO country_table (index_num, country) VALUES (132,'Poland');
+INSERT INTO country_table (index_num, country) VALUES (133,'Portugal');
+INSERT INTO country_table (index_num, country) VALUES (134,'Qatar');
+INSERT INTO country_table (index_num, country) VALUES (135,'Rep. of Korea');
+INSERT INTO country_table (index_num, country) VALUES (136,'Rep. of Moldova');
+INSERT INTO country_table (index_num, country) VALUES (137,'Romania');
+INSERT INTO country_table (index_num, country) VALUES (138,'Russian Federation');
+INSERT INTO country_table (index_num, country) VALUES (139,'Rwanda');
+INSERT INTO country_table (index_num, country) VALUES (140,'Saint Kitts and Nevis');
+INSERT INTO country_table (index_num, country) VALUES (141,'Saint Lucia');
+INSERT INTO country_table (index_num, country) VALUES (142,'Saint Vincent and the Grenadines');
+INSERT INTO country_table (index_num, country) VALUES (143,'Samoa');
+INSERT INTO country_table (index_num, country) VALUES (144,'Saudi Arabia');
+INSERT INTO country_table (index_num, country) VALUES (145,'Senegal');
+INSERT INTO country_table (index_num, country) VALUES (146,'Serbia and Kosovo: (1999)');
+INSERT INTO country_table (index_num, country) VALUES (147,'Sierra Leone');
+INSERT INTO country_table (index_num, country) VALUES (148,'Singapore');
+INSERT INTO country_table (index_num, country) VALUES (149,'Sint Maarten, Dutch part');
+INSERT INTO country_table (index_num, country) VALUES (150,'Slovakia');
+INSERT INTO country_table (index_num, country) VALUES (151,'Slovenia');
+INSERT INTO country_table (index_num, country) VALUES (152,'Solomon Islands');
+INSERT INTO country_table (index_num, country) VALUES (153,'Somalia');
+INSERT INTO country_table (index_num, country) VALUES (154,'South Africa');
+INSERT INTO country_table (index_num, country) VALUES (155,'South Sudan');
+INSERT INTO country_table (index_num, country) VALUES (156,'Spain');
+INSERT INTO country_table (index_num, country) VALUES (157,'Sri Lanka');
+INSERT INTO country_table (index_num, country) VALUES (158,'Sudan');
+INSERT INTO country_table (index_num, country) VALUES (159,'Suriname');
+INSERT INTO country_table (index_num, country) VALUES (160,'Sweden');
+INSERT INTO country_table (index_num, country) VALUES (161,'Switzerland');
+INSERT INTO country_table (index_num, country) VALUES (162,'Syrian Arab Rep.');
+INSERT INTO country_table (index_num, country) VALUES (163,'Tajikistan');
+INSERT INTO country_table (index_num, country) VALUES (164,'Thailand');
+INSERT INTO country_table (index_num, country) VALUES (165,'Timor-Leste');
+INSERT INTO country_table (index_num, country) VALUES (166,'Togo');
+INSERT INTO country_table (index_num, country) VALUES (167,'Trinidad and Tobago');
+INSERT INTO country_table (index_num, country) VALUES (168,'Tunisia');
+INSERT INTO country_table (index_num, country) VALUES (169,'Turkmenistan');
+INSERT INTO country_table (index_num, country) VALUES (170,'Turks and Caicos Islands');
+INSERT INTO country_table (index_num, country) VALUES (171,'Türkiye');
+INSERT INTO country_table (index_num, country) VALUES (172,'Uganda');
+INSERT INTO country_table (index_num, country) VALUES (173,'Ukraine');
+INSERT INTO country_table (index_num, country) VALUES (174,'United Arab Emirates');
+INSERT INTO country_table (index_num, country) VALUES (175,'United Kingdom of Great Britain and Northern Ireland');
+INSERT INTO country_table (index_num, country) VALUES (176,'United Rep. of Tanzania');
+INSERT INTO country_table (index_num, country) VALUES (177,'United States of America');
+INSERT INTO country_table (index_num, country) VALUES (178,'Uruguay');
+INSERT INTO country_table (index_num, country) VALUES (179,'Uzbekistan');
+INSERT INTO country_table (index_num, country) VALUES (180,'Vanuatu');
+INSERT INTO country_table (index_num, country) VALUES (181,'Venezuela, Bolivarian Republic of');
+INSERT INTO country_table (index_num, country) VALUES (182,'Viet Nam');
+INSERT INTO country_table (index_num, country) VALUES (183,'Yemen');
+INSERT INTO country_table (index_num, country) VALUES (184,'Zambia');
+INSERT INTO country_table (index_num, country) VALUES (185,'Zimbabwe');
+
