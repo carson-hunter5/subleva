@@ -34,7 +34,7 @@ def get_events():
 
 
 # Creates a new appointment for a migrant
-@city_council.route('/city_council', methods=['POST'])
+@city_council.route('/council_add_event', methods=['POST'])
 def add_communityEvent():
     
     # collecting data from the request object 
@@ -44,17 +44,17 @@ def add_communityEvent():
     #extracting the variable
     date = the_data['date']
     eventID = the_data['eventID']
-    name = the_data['name']
+    name = the_data['eventName']
     duration = the_data['duration']
     venueCapacity = the_data['venueCapacity']
 
     # Constructing the query
-    query = 'insert into communityEvent (date, eventID, name, duration, venueCapacity) values ("'
-    query += date + '", '
-    query += eventID + '", "'
-    query += name + '", "'
-    query += duration + '", "'
-    query += venueCapacity + '", "'
+    query = 'INSERT INTO communityEvent (date, eventID, name, duration, venueCapacity) VALUES ('
+    query += "'" + date + "',"
+    query += "'" + str(eventID) + "',"
+    query += "'" + name + "',"
+    query += "'" + str(duration) + "',"
+    query += "'" + str(venueCapacity) + "')"
     
     current_app.logger.info(query)
 
@@ -71,24 +71,24 @@ def add_communityEvent():
 def update_communityEvent():
     current_app.logger.info('PUT /city_council route')
     event_info = request.json
+    eventID = event_info['eventID']
     duration = event_info['duration']
-    name = event_info['name']
+    name = event_info['eventName']
     date = event_info['date']
     venueCapacity = event_info['venueCapacity']
 
-    query = 'UPDATE communityEvent SET duration = %s, name = %s, date = %s, venueCapacity = %s'
-    data = (duration, name, date, venueCapacity)
+    query = f"""UPDATE communityEvent SET duration = {duration}, name = '{name}', date = '{date}', venueCapacity = {venueCapacity} WHERE eventID = {eventID}"""
     cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
+    cursor.execute(query)
     db.get_db().commit()
     return 'Event updated!'
 
-# Delete the event for a specifc migrant
+# Delete the event 
 @city_council.route('/city_council/communityEvent/<eventID>', methods=['DELETE'])
 def delete_event(eventID):
     current_app.logger.info('DELETE /city_council/communityEvent/<eventID> route')
     
-    query = 'DELETE FROM communityEvent WHERE eventtID = {0}'.format(eventID)
+    query = f"""DELETE FROM communityEvent WHERE eventID = {eventID}"""
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -133,3 +133,38 @@ def get_demographics(cohortID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+@city_council.route('/city_council/delete_bulletin/<post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    current_app.logger.info('/city_council/delete_bulletin/<post_id> route')
+    query = f"""DELETE FROM posts WHERE postID = {post_id}"""
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Event cancelled!'
+
+@city_council.route('/city_council/bulletin', methods=['GET'])
+def get_posts():
+    # get a cursor object from the database
+    cursor = db.get_db().cursor()
+
+    # use cursor to query the database for a list of products
+    cursor.execute('SELECT postID, postContent, migrantID, displayName from posts ORDER BY createdAt ASC')
+
+    # grab the column headers from the returned data
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)

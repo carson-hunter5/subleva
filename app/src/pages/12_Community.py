@@ -16,3 +16,8 @@ except:
   data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
 
 st.dataframe(data)
+
+if st.button('Back', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/10_Migrant_Home.py')

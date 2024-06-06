@@ -10,8 +10,9 @@ add_logo("assets/logo.png", height=400)
 st.header('Appointments')
 st.write("Hello! Here is a list of all your appointments scheduled to meet with a representative on behalf of Tanya Bracker.")
 
+st.write(st.session_state)
 
-id = st.number_input("Please type your ID")
+id = st.session_state["id"]
 
 data = {} 
 try:
@@ -36,4 +37,7 @@ if st.button("Cancel Appointment:"):
   requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_edit}""")
 
 
-
+if st.button('Back', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/10_Migrant_Home.py')

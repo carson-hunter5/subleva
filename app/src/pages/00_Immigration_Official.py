@@ -22,7 +22,7 @@ if st.button('View Population Data',
 if st.button('View Current Asylum Applications', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Asylum_Applications.py')
+  st.switch_page('pages/02_Asylum_Application.py')
 
 if st.button('View Asylum Applications Statistics', 
              type='primary',

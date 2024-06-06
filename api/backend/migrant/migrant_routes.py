@@ -139,7 +139,7 @@ def get_posts():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt ASC LIMIT 7')
+    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt DESC LIMIT 7')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -176,7 +176,7 @@ def get_post(migrantID):
     return the_response
 
 # Creates a new post for a migrant
-@migrant.route('/migrant/post/<postID>,<postContent>,<displayName>, <migrantID>', methods=['POST'])
+@migrant.route('/migrant/add_post', methods=['POST'])
 def add_new_post():
     
     # collecting data from the request object 
@@ -186,17 +186,16 @@ def add_new_post():
     #extracting the variable
     postID = the_data['postID']
     postContent = the_data['postContent']
-    createdAt = the_data['createdAt']
     displayName = the_data['displayName']
     migrantID = the_data['migrantID']
 
     # Constructing the query
-    query = 'insert into posts (postID, postContent, createdAt, displayName, migrantID) values ("'
-    query += postID + '", "'
-    query += postContent + '", "'
-    query += createdAt + '", '
-    query += displayName + '", "'
-    query += migrantID + '", '
+    query = 'INSERT INTO posts (postID, postContent, createdAt, displayName, migrantID) VALUES ('
+    query += "'" + str(postID) + "',"
+    query += "'" + postContent + "',"
+    query += 'NOW(),'
+    query += "'" + displayName + "',"
+    query += "'" + str(migrantID) + "')"
     
     current_app.logger.info(query)
 
@@ -204,7 +203,7 @@ def add_new_post():
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    
+      
     return 'New Post'
 
 # Edit the post for a specifc migrant
