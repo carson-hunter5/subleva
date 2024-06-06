@@ -2,11 +2,13 @@ import streamlit as st
 import requests
 import datetime
 from streamlit_extras.app_logo import add_logo
-
+from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="API Test", page_icon="🙏")
 
 add_logo("assets/logo.png", height=400)
+
+SideBarLinks()
 
 st.write("Displaying all community events")
 
