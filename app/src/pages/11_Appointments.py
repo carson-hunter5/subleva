@@ -1,16 +1,15 @@
 import streamlit as st
 import requests
 from streamlit_extras.app_logo import add_logo
-
+from modules.nav import SideBarLinks
 st.set_page_config (page_title="API Test", page_icon="🙏")
-
+SideBarLinks()
 add_logo("assets/logo.png", height=400)
 
 # set the header of the page
 st.header('Appointments')
 st.write("Hello! Here is a list of all your appointments scheduled to meet with a representative on behalf of Tanya Bracker.")
 
-st.write(st.session_state)
 
 id = st.session_state["id"]
 
