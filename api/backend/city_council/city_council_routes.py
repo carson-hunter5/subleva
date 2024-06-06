@@ -33,7 +33,7 @@ def get_events():
     return jsonify(json_data)
 
 
-# Creates a new appointment for a migrant
+# Creates a new community event
 @city_council.route('/council_add_event', methods=['POST'])
 def add_communityEvent():
     
