@@ -4,7 +4,7 @@ import datetime
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="API Test", page_icon="🙏")
+st.set_page_config (page_title="Community Event Manager", page_icon="🙏")
 
 add_logo("assets/logo.png", height=400)
 
@@ -27,6 +27,9 @@ except:
 
 st.dataframe(data)
 
+#event_options = [f"eventID: {communityEvent[]}, Name: {communityEvent[]}" for communityEvent in data]
+
+# Creates an Event
 st.write("**Create an Event:**")
 event_name = st.text_input("Event Name")
 event_id = st.number_input("Event ID")
@@ -46,12 +49,7 @@ if st.button("Submit"):
         }
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
 
-st.write("Cancel an Event:")
-
-
-id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
-requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
-
+# Edits an event
 st.write("Edit an Event:")
 
 id_to_edit = st.number_input("Type the ID of the Event You'd Like to Edit")
@@ -71,7 +69,26 @@ if st.button("Submit Edited Info"):
           "eventID" : str(event_id_to_edit)
       }
     requests.put("http://api:4000/c/city_council/communityEvent", json = edited_event_data)
- 
+
+# Cancels an event
+st.write("Cancel an Event:")
+
+id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
+requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
+
+if st.button("Cancel Appointment:"):
+  requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
+  
+##
+#options = st.multiselect(
+    #"Which events would you like to delete?",
+    #event_options,
+#)
+
+#st.write("You selected:", options)
+#id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
+#requests.delete(f"http://api:4000/c/city_council/communityEvent/{id_to_cancel}")
+
 if st.button('Back', 
              type='primary',
              use_container_width=True):

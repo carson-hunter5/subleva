@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import datetime
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 st.set_page_config (page_title="API Test", page_icon="🙏")
@@ -22,18 +23,32 @@ except:
 
 st.dataframe(data)
 
-# Appointment Deletion / Edit 
+# Appointment Edit
 
-st.write("Cancel/Edit an Appointment:")
+st.write("Edit an Appointmemt:")
 
-id_to_edit = st.number_input("Type the ID of the Appointment You'd Like to Cancel or Edit")
+id_to_edit = st.number_input("Type the ID of the appointment You'd Like to Edit")
 
-appointment_to_edit = {}
-appointment_to_edit = requests.get(f"""http://api:4000/m/migrant/show_appt/{id_to_edit}""")
-st.dataframe(appointment_to_edit)
+appointment_id_to_edit = id_to_edit
+edit_volunteer_id = st.text_input("Edited Volunteer ID")
+edit_appointment_date = st.date_input("Edited Appointment Date", value=datetime.date.today())
+if st.button("Submit Edited Info"):
+  if edit_appointment_date and edit_volunteer_id:
+    edited_appointment_data = {
+          "date" : str(edit_appointment_date),
+          "volunteerID" : str(edit_volunteer_id),
+      }
+    requests.put("http://api:4000/m/migrant/appointment", json = edited_appointment_data)
+
+# Appointment Deletion  
+
+st.write("Cancel an Appointment:")
+
+id_to_cancel = st.number_input("Type the ID of the Appointment You'd Like to Cancel")
+requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_cancel}""")
 
 if st.button("Cancel Appointment:"):
-  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_edit}""")
+  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_cancel}""")
 
 
 if st.button('Back', 
