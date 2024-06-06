@@ -14,17 +14,12 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('Schedule Appointments', 
+if st.button('Manage Community Events', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_Appointments_Confirmation.py')
+  st.switch_page('pages/23_Community_Events.py')
 
-if st.button('View Community Events', 
+if st.button('Manage Bulletin Board', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/22_Community_Creation.py')
-
-if st.button('View Community Bulletin Board', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/13_Bulletin.py')
+  st.switch_page('pages/24_City_Council_Bulletin.py')

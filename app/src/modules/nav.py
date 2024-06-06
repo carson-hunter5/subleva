@@ -16,12 +16,6 @@ def ImmigrationHomeNav():
 def PopulationNav():
     st.sidebar.page_link("pages/01_Population.py", label="Population Statistics Map", icon='🗺️')
 
-def WorldBankVizNav():
-    st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon='🏦')
-
-def MapDemoNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon='🗺️')
-
 def AsylumApplicationNav():
     st.sidebar.page_link("pages/02_Asylum_Application.py", label="Asylum Application Map", icon='🗺️')
 
@@ -33,32 +27,25 @@ def MigrantHomeNav():
     st.sidebar.page_link("pages/10_Migrant_Home.py", label="Home", icon='🛜')
 
 def AppointmentsNav():
-    st.sidebar.page_link("pages/11_Appointments.py", label="Appointments", icon='🌺')
+    st.sidebar.page_link("pages/11_Appointments.py", label="Your Appointments", icon='🌺')
 
 def CommunityEventsNav():
-    st.sidebar.page_link("pages/12_Community.py", label="Community Events", icon='🏦')
+    st.sidebar.page_link("pages/12_Community.py", label=" View Community Events", icon='🏦')
 
 def BulletinBoardNav():
     st.sidebar.page_link("pages/13_Bulletin.py", label='Community Bulletin Board', icon='🏢')
 
-def ClassificationNav():
-    st.sidebar.page_link("pages/06_Classification.py", label="Classification Demo", icon='🌺')
 
 #### ------------------------ Examples for Role of City Council ------------------------
 
 def CityCouncilHomeNav():
     st.sidebar.page_link("pages/20_City_Council_Home.py", label="Home", icon='🛜')
 
-def AppointmentConfirmationNav():
-    st.sidebar.page_link("pages/21_Appointment_Confirmation.py", label='Appointment Book', icon='🏢')
+def EventManagementNav():
+    st.sidebar.page_link("pages/23_Community_Events.py", label="Manage Events", icon='🛜')
 
-def CommunityEventsNav():
-    st.sidebar.page_link("pages/22_Community_Creation.py", label='Event Book', icon='🏢')
-
-def ChatBotNav():
-    st.sidebar.page_link("pages/03_Simple_Chat_Bot.py", label='ML Model Management', icon='🏢')
-
-
+def BulletinManagementNav():
+    st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🏢')
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
     """
@@ -87,23 +74,20 @@ def SideBarLinks(show_home=False):
             AsylumApplicationNav()
             AsylumStatisticsNav()
             PopulationNav()
-            WorldBankVizNav()
-            MapDemoNav()
 
         # If the user role is migrant, show the [insert pages here] 
-        if st.session_state['role'] == 'migrant':
+        elif st.session_state['role'] == 'migrant':
             MigrantHomeNav()
             AppointmentsNav()
             BulletinBoardNav()
             CommunityEventsNav()
-            ClassificationNav()
-        
+           
         # If the user is an city council member, show them [insert pages here] 
-        if st.session_state['role'] == 'city_council':
+        elif st.session_state['role'] == 'city_council':
             CityCouncilHomeNav()
-            AppointmentConfirmationNav()
-            CommunityEventsNav()
-            ChatBotNav()
+            EventManagementNav()
+            BulletinManagementNav()
+            
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()

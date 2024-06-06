@@ -29,6 +29,7 @@ if st.button('Act as Hugo Diallo, a Migrant',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'migrant'
     st.session_state['first_name'] = 'Hugo'
+    st.session_state["id"] = 31
     st.switch_page('pages/10_Migrant_Home.py')
 
 if st.button('Act as Tanya Bracker, the Head of Refugee Affairs for her city council', 
