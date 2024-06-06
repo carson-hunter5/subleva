@@ -1,8 +1,10 @@
 import streamlit as st
 import requests
 import datetime
+import requests
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+
 st.set_page_config (page_title="API Test", page_icon="🙏")
 SideBarLinks()
 add_logo("assets/logo.png", height=400)
@@ -10,7 +12,6 @@ add_logo("assets/logo.png", height=400)
 # set the header of the page
 st.header('Appointments')
 st.write("Hello! Here is a list of all your appointments scheduled to meet with a representative on behalf of Tanya Bracker.")
-
 
 id = st.session_state["id"]
 
@@ -22,6 +23,13 @@ except:
   data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
 
 st.dataframe(data)
+
+# Creating an Appointment
+
+if st.button('New Appointment', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/14_Schedule_Appointment.py')
 
 # Appointment Edit
 

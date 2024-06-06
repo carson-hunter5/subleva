@@ -1,7 +1,9 @@
 import streamlit as st
 import requests
 import datetime
+import requests
 from streamlit_extras.app_logo import add_logo
+import logging 
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="Community Event Manager", page_icon="🙏")
@@ -45,7 +47,6 @@ if st.button("Submit"):
             "date" : str(date),
             "duration" : duration,
             "venueCapacity" : venue_capacity
-
         }
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
 
@@ -78,7 +79,7 @@ requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}
 
 if st.button("Cancel Appointment:"):
   requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
-  
+
 ##
 #options = st.multiselect(
     #"Which events would you like to delete?",

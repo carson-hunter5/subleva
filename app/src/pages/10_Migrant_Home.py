@@ -14,10 +14,15 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('Schedule Appointments', 
+if st.button('Appointment Book', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/11_Appointments.py')
+
+if st.button('Schedule Appointment', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/14_Schedule_Appointment.py')
 
 if st.button('View Community Events', 
              type='primary',
