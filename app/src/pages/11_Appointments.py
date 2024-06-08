@@ -16,12 +16,7 @@ st.write("Hello! Here is a list of all your appointments scheduled to meet with 
 id = st.session_state["id"]
 
 data = {} 
-try:
-  data = requests.get(f"""http://api:4000/m/migrant/appointments/{id}""").json()
-except:
-  st.write("**Important**: Could not connect to sample api, so using dummy data.")
-  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
-
+data = requests.get(f"""http://api:4000/m/migrant/appointments/{id}""").json()
 
 edited_data = st.data_editor(
     data,
@@ -32,42 +27,28 @@ edited_data = st.data_editor(
     },
 )
 
+col1, col2, col3 = st.columns(3, gap = "medium")
+
 # Creating an Appointment
-st.subheader("Schedule a New Appointment", divider='green')
-if st.button('New Appointment', 
+
+with col1:
+ if st.button('New Appointment', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/14_Schedule_Appointment.py')
 
-# Appointment Edit
+# Editing an Appointment
 
-st.write("Edit an Appointmemt:")
-
-id_to_edit = st.number_input("Type the ID of the appointment you'd Like to Edit")
-
-appointment_id_to_edit = id_to_edit
-edit_volunteer_id = st.text_input("Edited Volunteer ID")
-edit_appointment_date = st.date_input("Edited Appointment Date", value=datetime.date.today())
-if st.button("Submit Edited Info"):
-  if edit_appointment_date and edit_volunteer_id:
-    edited_appointment_data = {
-          "date" : str(edit_appointment_date),
-          "volunteerID" : str(edit_volunteer_id),
-      }
-    requests.put("http://api:4000/m/migrant/appointment", json = edited_appointment_data)
-
-# Appointment Deletion  
-
-st.write("Cancel an Appointment:")
-
-date_to_cancel = st.date_input("Type the Appointment Date", value=None)
-requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{date_to_cancel}""")
-
-if st.button("Cancel Appointment"):
-  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{date_to_cancel}""")
-
-
-if st.button('Back', 
+with col2:
+ if st.button('Edit Appointment', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/10_Migrant_Home.py')
+  st.switch_page('pages/16_Edit_Appointment.py')
+
+# Appointment Deletion 
+
+with col3: 
+ if st.button('Delete Appointment', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/15_Cancel_Appointment.py')

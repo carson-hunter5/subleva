@@ -21,7 +21,7 @@ SideBarLinks()
 # assigns random volunteers based on the volunteers availability to the appointment
 # the booking appointment will feature the date and from the date they could select
 
-st.write("**Schedule a New Appointment:**")
+st.subheader("**Schedule a New Appointment**", divider='green')
 volunteerID = st.text_input("volunteerID")
 date = st.date_input("Event Date", value=datetime.date.today())
 appointmentID = st.text_input("appointmentID")
@@ -41,4 +41,4 @@ if st.button("Submit"):
 if st.button('Back', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/10_Migrant_Home.py')
+  st.switch_page('pages/11_Appointments.py')
