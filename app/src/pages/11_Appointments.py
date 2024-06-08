@@ -33,7 +33,7 @@ edited_data = st.data_editor(
 )
 
 # Creating an Appointment
-st.write("Schedule a New Appointment")
+st.subheader("Schedule a New Appointment", divider='green')
 if st.button('New Appointment', 
              type='primary',
              use_container_width=True):

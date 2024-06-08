@@ -27,7 +27,7 @@ edited_data = st.data_editor(
 )
 
 
-st.write("Delete a Post:")
+st.subheader("Delete a Post", divider='green')
 
 id_to_delete = st.number_input("Type the post ID",value=0, step=1)
 delete_button = st.button('Delete Post')
