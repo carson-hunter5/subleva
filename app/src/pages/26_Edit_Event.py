@@ -17,21 +17,18 @@ st.header("Edit Community Event", divider='green')
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
 
-id_to_edit = st.number_input("Enter Event ID",value=0, step=1, placeholder="Type a value...")
-
-event_id_to_edit = id_to_edit
-
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     event_ids = [item['eventID'] for item in data if 'eventID' in item]
 
     if event_ids:
-        id_to_delete = st.selectbox("Select the Event ID", options=event_ids)
+        id_to_edit = st.selectbox("Select the Event ID", options=event_ids)
 
 
 edit_event_name = st.text_input("New Event Name")
 edit_duration = st.number_input("New Duration",value=0, step=1, placeholder="Type a value...")
 edit_venue_capacity = st.number_input("New Venue Capcity",value=0, step=1, placeholder="Type a value...")
 edit_event_date = st.date_input("New Event Date", value=datetime.date.today())
+
 
 if st.button("Submit Event"):
  if edit_event_name and edit_event_date and edit_duration and edit_venue_capacity:
@@ -40,7 +37,7 @@ if st.button("Submit Event"):
            "date" : str(edit_event_date),
            "duration" : str(edit_duration),
            "venueCapacity" : str(edit_venue_capacity),
-           "eventID" : str(event_id_to_edit)
+           "eventID" : str(id_to_edit)
        }
      requests.put("http://api:4000/c/city_council/communityEvent", json = edited_event_data)
 

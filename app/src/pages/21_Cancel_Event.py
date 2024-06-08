@@ -15,11 +15,7 @@ SideBarLinks()
 st.header("Cancel Event", divider='green')
 
 data = {} 
-try:
-  data = requests.get('http://api:4000/c/city_council').json()
-except:
-  st.write("**Important**: Could not connect to sample api, so using dummy data.")
-  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
+data = requests.get('http://api:4000/c/city_council').json()
 
 
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
@@ -27,14 +23,14 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
 
     if event_ids:
         id_to_delete = st.selectbox("Select the Event ID", options=event_ids)
-        delete_button = st.button('Delete Event')
 
-        if delete_button:
-            response = requests.delete(f'http://api:4000/c/city_council/community_event/{id_to_delete}')
-            data = [item for item in data if item['eventID'] != id_to_delete]
-            #st.experimental_rerun() 
-            st.dataframe(data) 
-
+if st.button('Delete Event'):
+    if id_to_delete:
+    edited_event_data = {
+        "eventID" : str(id_to_delete)
+    }
+    response = requests.delete(f'http://api:4000/c/city_council/community_event/{id_to_delete}')
+    data = [item for item in data if item['eventID'] != id_to_delete] 
 
 if st.button('Back', 
              type='primary',
