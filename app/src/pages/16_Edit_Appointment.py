@@ -20,9 +20,6 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     if appointment_date:
         id_to_edit = st.selectbox("Select the Appointment Date", options=appointment_date)
 
-#id_to_edit = st.number_input("Type the ID of the appointment you'd Like to Edit")
-
-#appointment_id_to_edit = id_to_edit
 edit_volunteer_id = st.text_input("Edited Volunteer ID")
 edit_appointment_date = st.date_input("Edited Appointment Date", value=datetime.date.today())
 

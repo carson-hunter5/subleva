@@ -11,42 +11,42 @@ def AboutPageNav():
 
 #### ------------------------ Examples for Role of Immigration Official ------------------------
 def ImmigrationHomeNav():
-    st.sidebar.page_link("pages/00_Immigration_Official.py", label="Home", icon='👤')
+    st.sidebar.page_link("pages/00_Immigration_Official.py", label="Home", icon='🏠')
 
 def PopulationNav():
-    st.sidebar.page_link("pages/01_Population.py", label="Population Statistics Map", icon='🗺️')
+    st.sidebar.page_link("pages/01_Population.py", label="Population Statistics", icon='🗺️')
 
 def AsylumApplicationNav():
-    st.sidebar.page_link("pages/02_Asylum_Application.py", label="Asylum Application Map", icon='🗺️')
+    st.sidebar.page_link("pages/02_Asylum_Application.py", label="Asylum Prediction Model", icon='🗂️')
 
 def AsylumStatisticsNav():
-    st.sidebar.page_link("pages/03_Asylum_Statistics.py", label="Asylum Statistics", icon='🗺️')
+    st.sidebar.page_link("pages/03_Asylum_Statistics.py", label="Asylum Statistics", icon='📊')
 
 ## ------------------------ Examples for Role of Migrant ------------------------
 def MigrantHomeNav():
-    st.sidebar.page_link("pages/10_Migrant_Home.py", label="Home", icon='🛜')
+    st.sidebar.page_link("pages/10_Migrant_Home.py", label="Home", icon='🏠')
 
 def AppointmentsNav():
-    st.sidebar.page_link("pages/11_Appointments.py", label="Your Appointments", icon='🌺')
+    st.sidebar.page_link("pages/11_Appointments.py", label="Your Appointments", icon='📌')
 
 def CommunityEventsNav():
-    st.sidebar.page_link("pages/12_Community.py", label=" View Community Events", icon='🏦')
+    st.sidebar.page_link("pages/12_Community.py", label=" View Community Events", icon='🎟️')
 
 def BulletinBoardNav():
-    st.sidebar.page_link("pages/13_Bulletin.py", label='Community Bulletin Board', icon='🏢')
+    st.sidebar.page_link("pages/13_Bulletin.py", label='Community Bulletin Board', icon='📝')
 
 
 
 #### ------------------------ Examples for Role of City Council ------------------------
 
 def CityCouncilHomeNav():
-    st.sidebar.page_link("pages/20_City_Council_Home.py", label="Home", icon='🛜')
+    st.sidebar.page_link("pages/20_City_Council_Home.py", label="Home", icon='🏠')
 
 def EventManagementNav():
-    st.sidebar.page_link("pages/23_Community_Events.py", label="Manage Events", icon='🛜')
+    st.sidebar.page_link("pages/23_Community_Events.py", label="Manage Events", icon='💻')
 
 def BulletinManagementNav():
-    st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🏢')
+    st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🔖')
 # --------------------------------Links Function -----------------------------------------------
 # Define the sidebar links function
 def SideBarLinks(show_home=False):

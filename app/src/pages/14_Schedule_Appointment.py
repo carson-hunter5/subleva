@@ -18,8 +18,6 @@ SideBarLinks()
 # when a migrant wants to make an appt for a particular day, randomly assign them 
 #      to one of the volunteers on that day. 
 
-# assigns random volunteers based on the volunteers availability to the appointment
-# the booking appointment will feature the date and from the date they could select
 
 st.subheader("**Schedule a New Appointment**", divider='green')
 volunteerID = st.text_input("volunteerID")
