@@ -35,8 +35,6 @@ def CommunityEventsNav():
 def BulletinBoardNav():
     st.sidebar.page_link("pages/13_Bulletin.py", label='Community Bulletin Board', icon='📝')
 
-
-
 #### ------------------------ Examples for Role of City Council ------------------------
 
 def CityCouncilHomeNav():
@@ -47,6 +45,7 @@ def EventManagementNav():
 
 def BulletinManagementNav():
     st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🔖')
+
 # --------------------------------Links Function -----------------------------------------------
 # Define the sidebar links function
 def SideBarLinks(show_home=False):
@@ -100,4 +99,3 @@ def SideBarLinks(show_home=False):
             del st.session_state['role']
             del st.session_state['authenticated']
             st.switch_page('Home.py')
-
