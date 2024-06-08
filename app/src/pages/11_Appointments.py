@@ -52,11 +52,11 @@ if st.button("Submit Edited Info"):
 
 st.write("Cancel an Appointment:")
 
-id_to_cancel = st.number_input("Type the ID of the Appointment You'd Like to Cancel")
-requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_cancel}""")
+date_to_cancel = st.date_input("Type the date of the appointment You'd Like to Cancel")
+requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{date_to_cancel}""")
 
-if st.button("Cancel Appointment:"):
-  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{id_to_cancel}""")
+if st.button("Cancel Appointment"):
+  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{date_to_cancel}""")
 
 
 if st.button('Back', 

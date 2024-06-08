@@ -51,6 +51,7 @@ def EventManagementNav():
 def BulletinManagementNav():
     st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🏢')
 # --------------------------------Links Function -----------------------------------------------
+# Define the sidebar links function
 def SideBarLinks(show_home=False):
     """
     This function handles adding links to the sidebar of the app based upon the logged-in user's role,

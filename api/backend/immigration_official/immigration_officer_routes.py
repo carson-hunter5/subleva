@@ -8,11 +8,11 @@ from backend.ml_models.model01 import predict
 immigration_official = Blueprint('immigration official', __name__)
 
 # Get population from the database 
-@immigration_official.route('/countryStats/<population>', methods=['GET'])
+@immigration_official.route('/immigration_official/population', methods=['GET'])
 def get_demographics(population):
-    current_app.logger.info('GET /countryStats/<population> route')
+    current_app.logger.info('GET /immigration_official/population route')
     cursor = db.get_db().cursor()
-    cursor.execute('select countryID from countryStats where countryID = {0}'.format(population))
+    cursor.execute('select population from countryStats where countryID = {0}'.format(population))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

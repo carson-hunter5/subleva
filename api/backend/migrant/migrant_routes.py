@@ -31,7 +31,7 @@ def get_appointments(migrantID):
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute(f"""SELECT appointmentID, volunteerID, date FROM appointments WHERE migrantID = {migrantID}""")
+    cursor.execute(f"""SELECT appointmentID, volunteerID, CONVERT(date, date) AS Date FROM appointments WHERE migrantID = {migrantID}""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -56,7 +56,7 @@ def get_appt(apptID):
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute(f"""SELECT appointmentID, volunteerID, date FROM appointments WHERE appointmentID= {apptID}""")
+    cursor.execute(f"""SELECT appointmentID as Appointment ID, volunteerID as Volunteer ID , DATE(date) AS Date FROM appointments WHERE appointmentID= {apptID}""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -123,11 +123,11 @@ def update_migrant_appointment():
     return 'appointment updated!'
 
 # Delete the appointment for a specifc migrant
-@migrant.route('/migrant/appointment_delete/<appointmentID>', methods=['DELETE'])
-def delete_migrant_appointment(appointmentID):
-    current_app.logger.info('DELETE /migrant/appointment/<appointmentID> route')
+@migrant.route('/migrant/appointment_delete/<date>', methods=['DELETE'])
+def delete_migrant_appointment(date):
+    current_app.logger.info('DELETE /migrant/appointment/<date> route')
     cursor = db.get_db().cursor()
-    cursor.execute(f"""DELETE FROM appointments WHERE appointmentID = {appointmentID}""")
+    cursor.execute(f"""DELETE FROM appointments WHERE date = {date}""")
     db.get_db().commit()
 
 #Posts

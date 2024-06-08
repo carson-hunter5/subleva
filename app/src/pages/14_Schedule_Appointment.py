@@ -13,6 +13,14 @@ SideBarLinks()
 
 # Create a new appointment
 
+# add columns to the volunteer table for each day of the week
+# randomly assign volunteers to days
+# when a migrant wants to make an appt for a particular day, randomly assign them 
+#      to one of the volunteers on that day. 
+
+# assigns random volunteers based on the volunteers availability to the appointment
+# the booking appointment will feature the date and from the date they could select
+
 st.write("**Schedule a New Appointment:**")
 volunteerID = st.text_input("volunteerID")
 date = st.date_input("Event Date", value=datetime.date.today())
