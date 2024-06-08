@@ -71,10 +71,13 @@ with col2:
  st.subheader("Cancel an Event", divider='green')
 
  id_to_cancel = st.number_input("Enter Event ID",value=0, step=1)
- requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
 
- if st.button("Cancel Appointment"):
-   requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
+country_name  = st.selectbox(label="Select an Appointment ID to Cancel", options = data['name'])
+st.write(data)
+requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
+
+if st.button("Cancel Appointment"):
+    requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
 
 ##
 #options = st.multiselect(
@@ -83,7 +86,7 @@ with col2:
 #)
 
 #st.write("You selected:", options)
-#id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
+# id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
 #requests.delete(f"http://api:4000/c/city_council/communityEvent/{id_to_cancel}")
 
 if st.button('Back', 
