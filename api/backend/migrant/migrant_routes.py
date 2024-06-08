@@ -111,12 +111,12 @@ def add_appointment():
 def update_migrant_appointment():
     current_app.logger.info('PUT /migrant route')
     migrant_info = request.json
-    migrant_id = migrant_info['migrantID']
+    #migrant_id = migrant_info['migrantID']
     volunteerID = migrant_info['volunteerID']
     date = migrant_info['date']
 
-    query = 'UPDATE appointment SET migrant_ID = %s, volunteerID = %s, date = %s'
-    data = (migrant_id, volunteerID, date)
+    query = 'UPDATE appointment SET volunteerID = %s, date = %s'
+    data = (volunteerID, date)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()

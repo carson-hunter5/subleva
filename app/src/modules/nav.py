@@ -26,9 +26,6 @@ def AsylumStatisticsNav():
 def MigrantHomeNav():
     st.sidebar.page_link("pages/10_Migrant_Home.py", label="Home", icon='🛜')
 
-def ScheduleAppointmentNav():
-    st.sidebar.page_link("pages/14_Schedule_Appointment.py", label=" Schedule New Appointment", icon='🏦')
-
 def AppointmentsNav():
     st.sidebar.page_link("pages/11_Appointments.py", label="Your Appointments", icon='🌺')
 
@@ -83,7 +80,6 @@ def SideBarLinks(show_home=False):
         # If the user role is migrant, show the [insert pages here] 
         elif st.session_state['role'] == 'migrant':
             MigrantHomeNav()
-            ScheduleAppointmentNav()
             AppointmentsNav()
             BulletinBoardNav()
             CommunityEventsNav()

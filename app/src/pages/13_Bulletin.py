@@ -33,7 +33,7 @@ with col1:
  post_content = st.text_input("Post Content")
  post_id = st.number_input("Post ID",value=0, step=1)
 
-if st.button("Submit"):
+ if st.button("Submit"):
     if post_content and displayName and migrantID:
         post_data = {
             "postContent" : post_content,
