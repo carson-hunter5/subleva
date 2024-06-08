@@ -1,8 +1,5 @@
 from backend.db_connection import db
-"""
 import numpy as np
-"""
-
 import logging 
 import matplotlib.pyplot as plt
 import statistics as stats 
@@ -11,18 +8,21 @@ import statistics as stats
 def predict(var1, var2, var3, var4):
 
     cursor = db.get_db().cursor()
-    query = 'SELECT beta_vals FROM model1_params ORDER BY sequence_number DESC LIMIT 1'
+    query = 'SELECT beta_vals FROM model1_params'
     cursor.execute(query)
     return_val = cursor.fetchone()
-    params = return_val['beta_vals']
+    logging.info(f'return val datatype = {type(return_val)}')
+    params = return_val[0]
     logging.info(f'params = {params}')
     logging.info(f'params datatype = {type(params)}')
 
-    index_query = f"""select index_num from country_table where country_name = {var2}"""
+    index_query = f"""select index_num from country_table where country = '{var2}'"""
     cursor.execute(index_query)
     index_num = cursor.fetchone()
 
-    num_countries = "select count(*) as countries from country_table"
+    num_countries_query = "select count(*) as countries from country_table"
+    cursor.execute(num_countries_query)
+    num_countries = cursor.fetchone()
 
     params_array = np.array(list(map(float, params[1:-1].split(','))))
     logging.info(f'params array = {params_array}')
@@ -38,10 +38,17 @@ def predict(var1, var2, var3, var4):
         gender = np.array([1])
     else:
         gender = np.array([0])
-        
-    age = var4
-
-    m = np.concatenate([year, array, gender, age])
+    
+    logging.info(f'var4: {var4}')
+    age = np.array(list(map(float, var4[3:-1].split(' '))))
+    
+    logging.info(f'year = {year}')
+    logging.info(f'array = {array}')
+    logging.info(f'gender = {gender}')
+    logging.info(f'age = {age}')
+    logging.info(f"age dtype: {type(age)}")
+    logging.info(f"age dim: {age.shape}")
+    m = np.concatenate([np.array([1]), year, array, gender, age])
     prediction = np.exp(np.dot(params_array, m))
 
     return prediction 

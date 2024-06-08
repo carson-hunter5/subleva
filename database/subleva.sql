@@ -2362,10 +2362,11 @@ INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('149', '5');
 INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('705', '25');
 INSERT INTO attendeeEvents (eventID, attendeeID) VALUES ('758', '22');
 
+DROP TABLE IF EXISTS model1_params;
 CREATE TABLE IF NOT EXISTS model1_params (
     beta_vals LONGTEXT
 );
-INSERT INTO model1_params (beta_vals) VALUES ('[ 0.00657606, -1.77841744, -1.2832241 , -2.12463282, -2.33197343,
+INSERT INTO model1_params (beta_vals) VALUES ('[ -11.189063, 0.00657606, -1.77841744, -1.2832241 , -2.12463282, -2.33197343,
        -2.18232304, -1.6609086 , -1.26502699, -2.04542162, -2.27506478,
        -2.2812903 , -1.26957965, -2.05973826, -1.32056226,  0.28477442,
        -2.10320113, -1.75817804, -2.2829184 , -2.03031371, -1.35753525,
@@ -2597,4 +2598,3 @@ INSERT INTO country_table (index_num, country) VALUES (182,'Viet Nam');
 INSERT INTO country_table (index_num, country) VALUES (183,'Yemen');
 INSERT INTO country_table (index_num, country) VALUES (184,'Zambia');
 INSERT INTO country_table (index_num, country) VALUES (185,'Zimbabwe');
-

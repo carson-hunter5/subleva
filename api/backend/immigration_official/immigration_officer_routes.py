@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
-""""
 from backend.ml_models.model01 import predict
-"""
+
 
 immigration_official = Blueprint('immigration official', __name__)
 
@@ -146,7 +145,7 @@ def get_trends_per_year(countryID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-""""
+
 @immigration_official.route('/prediction/<var01>/<var02>/<var03>/<var04>', methods=['GET'])
 def predict_value(var01, var02, var03, var04):
     current_app.logger.info(f'var01 = {var01}')
@@ -154,6 +153,7 @@ def predict_value(var01, var02, var03, var04):
     current_app.logger.info(f'var03 = {var03}')
     current_app.logger.info(f'var04 = {var04}')
 
+    var01 = int(var01)
     returnVal = predict(var01, var02, var03, var04)
     return_dict = {'result': returnVal}
 
@@ -162,4 +162,21 @@ def predict_value(var01, var02, var03, var04):
     the_response.mimetype = 'application/json'
     return the_response
 
-"""
+@immigration_official.route('/countrylist', methods = ['GET'])
+def get_countries():
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT country from country_table')
+    column_headers = [x[0] for x in cursor.description]
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
