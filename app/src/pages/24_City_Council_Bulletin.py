@@ -8,7 +8,7 @@ st.set_page_config (page_title="Manage Community Bulletin", page_icon="")
 add_logo("assets/logo.png", height=400)
 
 SideBarLinks()
-st.write("See Recent Bulletin Posts")
+st.header("All Bulletin Posts")
 
 data = {} 
 try:
@@ -16,13 +16,26 @@ try:
 except:
   st.write("**Important**: Could not connect to database")
 
-st.dataframe(data)
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "displayName": "User Name",
+        "migrantID": "User ID",
+        "postContent": "Post",
+        "postID" : "Post ID",
+    },
+)
+
 
 st.write("Delete a Post:")
 
+id_to_delete = st.number_input("Type the post ID",value=0, step=1)
+delete_button = st.button('Delete Post')
 
-id_to_delete = st.number_input("Type the ID of the Post You'd Like to Delete")
-requests.delete(f"""http://api:4000/c/city_council/delete_bulletin/{id_to_delete}""")
+if delete_button:
+ response = requests.delete(f"""http://api:4000/c/city_council/delete_bulletin/{id_to_delete}""")
+ if response.status_code == 200:
+        st.write(f"Post Deleted")
 
 if st.button('Back', 
              type='primary',

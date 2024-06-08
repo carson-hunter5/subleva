@@ -5,7 +5,7 @@ import requests
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="API Test", page_icon="🙏")
+st.set_page_config (page_title="Appointment", page_icon="🙏")
 SideBarLinks()
 add_logo("assets/logo.png", height=400)
 
@@ -22,10 +22,18 @@ except:
   st.write("**Important**: Could not connect to sample api, so using dummy data.")
   data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
 
-st.dataframe(data)
+
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "date": "Date",
+        "appointmentID": "Appointment ID",
+        "volunteerID": "Volunteer ID",
+    },
+)
 
 # Creating an Appointment
-
+st.write("Schedule a New Appointment")
 if st.button('New Appointment', 
              type='primary',
              use_container_width=True):
@@ -35,7 +43,7 @@ if st.button('New Appointment',
 
 st.write("Edit an Appointmemt:")
 
-id_to_edit = st.number_input("Type the ID of the appointment You'd Like to Edit")
+id_to_edit = st.number_input("Type the ID of the appointment you'd Like to Edit")
 
 appointment_id_to_edit = id_to_edit
 edit_volunteer_id = st.text_input("Edited Volunteer ID")
@@ -52,7 +60,7 @@ if st.button("Submit Edited Info"):
 
 st.write("Cancel an Appointment:")
 
-date_to_cancel = st.date_input("Type the date of the appointment You'd Like to Cancel")
+date_to_cancel = st.date_input("Type the Appointment Date", value=None)
 requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{date_to_cancel}""")
 
 if st.button("Cancel Appointment"):

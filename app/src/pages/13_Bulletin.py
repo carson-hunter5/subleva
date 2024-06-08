@@ -7,7 +7,7 @@ st.set_page_config (page_title="Bulletin", page_icon="🙏")
 SideBarLinks()
 add_logo("assets/logo.png", height=400)
 
-st.write("See Recent Bulletin Posts")
+st.header("Recent Bulletin Posts")
 
 data = {} 
 try:
@@ -15,13 +15,20 @@ try:
 except:
   st.write("**Important**: Could not connect to database")
 
-st.dataframe(data)
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "createdAt": "Date Posted",
+        "displayName": "User Name",
+        "postContent": "Post",
+    },
+)
 
-st.write("**Create a Post:**")
+st.header("**Create a Post**")
+migrantID = st.session_state["id"]
+displayName = st.text_input("Display Name")
 post_content = st.text_input("Post Content")
 post_id = st.number_input("Post ID")
-displayName = st.text_input("Display Name")
-migrantID = st.session_state["id"]
 
 if st.button("Submit"):
     if post_content and post_id and displayName and migrantID:
