@@ -26,10 +26,10 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
 
 if st.button('Delete Event'):
     if id_to_delete:
-    edited_event_data = {
+        edited_event_data = {
         "eventID" : str(id_to_delete)
-    }
-    response = requests.delete(f'http://api:4000/c/city_council/community_event/{id_to_delete}')
+                             }
+    response = requests.delete(f'http://api:4000/c/city_council/communityEvent/{id_to_delete}')
     data = [item for item in data if item['eventID'] != id_to_delete] 
 
 if st.button('Back', 
