@@ -15,7 +15,6 @@ SideBarLinks()
 st.header("New Community Event", divider='green')
 
 # Creates an Event
-st.write("**Create an Event**")
 event_name = st.text_input("Event Name")
 event_id = st.number_input("Event ID", value=0, step=1)
 date = st.date_input("Event Date", value=datetime.date.today())
@@ -32,3 +31,9 @@ if st.button("Submit"):
             "venueCapacity" : venue_capacity
         }
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
+
+
+if st.button('Back', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/23_Community_Events.py')

@@ -32,62 +32,28 @@ edited_data = st.data_editor(
     },
 )
 
-# Creating an Appointment
-st.header("Create a New Event", divider='green')
+
+# Creating an Event Page
+st.subheader("Create a New Event", divider='green')
 if st.button('New Event', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/24_New_Community_Event.py')
+  st.switch_page('pages/25_New_Community_Event.py')
 
 
+# Editing an Event Page
+st.subheader("Edit an Event", divider='green')
+if st.button('Edit Event', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/26_Edit_Event.py')
 
-col1, col2 = st.columns(2, gap= "large")
-
-with col1:
-# Edits an event
- st.subheader("Edit an Event", divider='green')
-
- id_to_edit = st.number_input("Enter Event ID",value=0, step=1, placeholder="Type a value...")
-
- event_id_to_edit = id_to_edit
- edit_event_name = st.text_input("New Event Name")
- edit_duration = st.number_input("New Duration",value=0, step=1, placeholder="Type a value...")
- edit_venue_capacity = st.number_input("New Venue Capcity",value=0, step=1, placeholder="Type a value...")
- edit_event_date = st.date_input("New Event Date", value=datetime.date.today())
-
- if st.button("Submit Event"):
-   if edit_event_name and edit_event_date and edit_duration and edit_venue_capacity:
-     edited_event_data = {
-           "eventName" : str(edit_event_name),
-           "date" : str(edit_event_date),
-           "duration" : str(edit_duration),
-           "venueCapacity" : str(edit_venue_capacity),
-           "eventID" : str(event_id_to_edit)
-       }
-     requests.put("http://api:4000/c/city_council/communityEvent", json = edited_event_data)
-
-with col2:
-# Cancels an event
- st.subheader("Cancel an Event", divider='green')
-
- id_to_cancel = st.number_input("Enter Event ID",value=0, step=1)
-
-country_name  = st.selectbox(label="Select an Appointment ID to Cancel", options = data['name'])
-st.write(data)
-requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
-
-if st.button("Cancel Appointment"):
-    requests.delete(f"""http://api:4000/c/city_council/communityEvent/{id_to_cancel}""")
-
-##
-#options = st.multiselect(
-    #"Which events would you like to delete?",
-    #event_options,
-#)
-
-#st.write("You selected:", options)
-# id_to_cancel = st.number_input("Type the ID of the Event You'd Like to Cancel")
-#requests.delete(f"http://api:4000/c/city_council/communityEvent/{id_to_cancel}")
+# Canceling an Event Page
+st.subheader("Cancel an Event", divider='green')
+if st.button('Cancel Event', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/21_Cancel_Event.py')
 
 if st.button('Back', 
              type='primary',

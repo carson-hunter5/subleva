@@ -26,16 +26,19 @@ edited_data = st.data_editor(
     },
 )
 
-
 st.subheader("Delete a Post", divider='green')
 
-id_to_delete = st.number_input("Type the post ID",value=0, step=1)
-delete_button = st.button('Delete Post')
+if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+    post_ids = [item['postID'] for item in data if 'postID' in item]
 
-if delete_button:
- response = requests.delete(f"""http://api:4000/c/city_council/delete_bulletin/{id_to_delete}""")
- if response.status_code == 200:
-        st.write(f"Post Deleted")
+    if post_ids:
+        id_to_delete = st.selectbox("Select the post ID", options=post_ids)
+        delete_button = st.button('Delete Post')
+
+        if delete_button:
+            response = requests.delete(f'http://api:4000/c/city_council/delete_bulletin/{id_to_delete}')
+            data = [item for item in data if item['postID'] != id_to_delete]
+            st.experimental_rerun()  
 
 if st.button('Back', 
              type='primary',
