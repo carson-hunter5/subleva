@@ -39,7 +39,7 @@ def get_appt(weekday):
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute(f"""SELECT subject, date, weekday, v.name, COUNT(aa.attendeeID) FROM appointments JOIN appointmentAttendees
+    cursor.execute(f"""SELECT subject, appDate, weekday, v.name, COUNT(aa.attendeeID) FROM appointments JOIN appointmentAttendees
                     aa  ON appointments.appointmentID = aa.appointmentID 
                    JOIN volunteers v on appointments.volunteerID = v.id 
                    WHERE weekday = '{weekday}' GROUP BY aa.appointmentID""")
@@ -82,7 +82,7 @@ def update_migrant_appointment():
 def delete_migrant_appointment(date):
     current_app.logger.info('DELETE /migrant/appointment/<date> route')
     cursor = db.get_db().cursor()
-    cursor.execute(f"""DELETE FROM appointments WHERE date = {date}""")
+    cursor.execute(f"""DELETE FROM appointments WHERE appDate = {date}""")
     db.get_db().commit()
 
 #Posts
@@ -197,7 +197,7 @@ def get_events():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('select date, name, duration from communityEvent')
+    cursor.execute('select eventDate, name, duration from communityEvent')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
