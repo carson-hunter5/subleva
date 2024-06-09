@@ -21,7 +21,6 @@ logger.info(f'Data is: {data}')
 for row in data:
   row["Date"] = ' '.join(row["Date"].split(' ')[:4])
 
-# ' '.join(test_string.split(' ')[:4])
 logger.info(type(data))
 edited_data = st.data_editor(
     data,

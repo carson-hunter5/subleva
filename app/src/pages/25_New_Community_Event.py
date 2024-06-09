@@ -16,21 +16,19 @@ st.header("New Community Event", divider='green')
 
 # Creates an Event
 event_name = st.text_input("Event Name")
-date = st.date_input("Event Date", value=datetime.date.today())
+eventDate = st.date_input("Event Date", value=datetime.date.today())
 duration = st.number_input("Duration",value=0, step=1, placeholder="Type a value...")
 venue_capacity = st.number_input("Venue Capcity",value=0, step=1, placeholder="Type a value...")
 
 if st.button("Submit"):
-    if event_name and date and duration and venue_capacity:
+    if event_name and eventDate and duration and venue_capacity:
         post_data = {
             "eventName" : event_name,
-            "date" : str(date),
+            "eventDate" : str(eventDate),
             "duration" : duration,
             "venueCapacity" : venue_capacity
         }
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
-        st.balloons()
-
 
 if st.button('Back', 
              type='primary',

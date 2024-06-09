@@ -46,8 +46,3 @@ with col2:
    st.image("https://i.imgur.com/Hcmqbu2.jpeg")
    st.caption("Congrats to my baby sister Samara fopr graduating from Rutgers University!")
    st.caption("#firstgen    #youdidit    #classof2k23")
-
-if st.button('Back', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/10_Migrant_Home.py')

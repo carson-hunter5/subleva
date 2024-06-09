@@ -4,7 +4,7 @@ from backend.db_connection import db
 
 migrant = Blueprint('migrant', __name__)
 
-##Appointment Calls
+# Appointment 
 
 """""
 # Get all appointments from the database for a specific migrant
@@ -79,6 +79,7 @@ def get_appt(weekday):
 
     return jsonify(json_data)
 
+# Adds the assigned migrantID to the attendee appointments table
 @migrant.route('/make_appointment', methods=['POST'])
 def add_appointment():
     
@@ -98,7 +99,7 @@ def add_appointment():
     cursor.execute(query)
     db.get_db().commit()
 
-# show appointments for specific migrant
+# Show all the appoinments linked to a certain migrant
 @migrant.route('/migrant/appointments_cancel/<id>', methods=['GET'])
 def get_migrant_appointment_to_cancel(id): 
      cursor = db.get_db().cursor()
@@ -123,7 +124,9 @@ def get_migrant_appointment_to_cancel(id):
         json_data.append(dict(zip(column_headers, row)))
 
      return jsonify(json_data)
+
 # Creates a new appointment for a migrant
+
 """"
 @migrant.route('/migrant', methods=['POST'])
 def add_appointment():
@@ -163,6 +166,7 @@ def delete_migrant_appointment(migrantID,apptID):
     db.get_db().commit()
 
 #Posts
+
 # Get all posts from the database for a specific migrant
 @migrant.route('/migrant/posts', methods=['GET'])
 def get_posts():
@@ -191,7 +195,7 @@ def get_posts():
     return jsonify(json_data)
 
 
-
+# Gets a all posts from a certain migrant
 @migrant.route('/migrant/<migrantID>', methods=['GET'])
 def get_post(migrantID):
     current_app.logger.info('GET /posts/<migrantID> route')
@@ -236,6 +240,7 @@ def add_new_post():
       
     return 'New Post'
 
+"""""
 # Edit the post for a specifc migrant
 @migrant.route('/migrant/post', methods=['PUT'])
 def update_migrant_post():
@@ -250,6 +255,7 @@ def update_migrant_post():
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'Post updated!'
+"""""
 
 # Delete the post for a specifc migrant
 @migrant.route('/migrant/post/<postID>', methods=['DELETE'])
@@ -265,7 +271,7 @@ def delete_migrant_post(postID):
 
 # Community Events
 
-# Get all community events from the DB for a 
+# Get all community events from the DB 
 @migrant.route('/migrant/events', methods=['GET'])
 def get_events():
     # get a cursor object from the database

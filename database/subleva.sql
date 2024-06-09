@@ -641,4 +641,9 @@ INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('5', '4');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('18', '32');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('12', '46');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('29', '24');
+INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('27', '22');
+INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('5', '1');
+INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('1', '18');
+INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('12', '1');
+INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('29', '12');
 

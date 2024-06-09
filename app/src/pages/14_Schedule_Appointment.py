@@ -10,23 +10,35 @@ st.set_page_config(layout = 'wide')
 
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
+
 migrant_id = st.session_state["id"]
-# Create a new appointment
 
-# add columns to the volunteer table for each day of the week
-# randomly assign volunteers to days
-# when a migrant wants to make an appt for a particular day, randomly assign them 
-#      to one of the volunteers on that day. 
+# Schedule a new appointment
 
-# appts_on_weekday = {} 
-# data = requests.get('http://api:4000/m/migrant').json()
+st.subheader("**Schedule a New Appointment**", divider='green')
+
 weekday = st.selectbox(label = "Select a Weekday to View", options = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) 
 if st.button("Pick Weekday"):
        response = requests.get(f'http://api:4000/m/migrant/show_appt/{weekday}').json()
-       st.dataframe(response)
+       logger.info(f'Data is: {response}')
+       for row in response:
+           row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
 
+       logger.info(type(response))
+       edited_data = st.data_editor(
+       response,
 
-appt_id = st.number_input("Input Appointment to Reserve")
+    column_config={
+        "appDate": "Date",
+        "COUNT(aa.attendeeID)":"Spots Reserved",
+        "appointmentID": "Appointment ID",
+        "name": "Volunteer Name",
+        "subject": "Topic",
+        "weekday": "Day of the Week"
+    },
+)
+
+appt_id = st.number_input("Input Appointment to Reserve", step= 1, value=0)
 if st.button("Reserve Appointment"):
        post_data = {
            "appointmentID" : appt_id,
@@ -38,7 +50,6 @@ if st.button("Reserve Appointment"):
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     weekdays_list = [item['weekday'] for item in data if 'weekday' in item]
 
-st.subheader("**Schedule a New Appointment**", divider='green')
 
 if weekdays_list:
     selected_day = st.selectbox("Select a Day", options=weekdays_list)

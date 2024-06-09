@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+import logging
+logger = logging.getLogger(__name__)
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
@@ -12,12 +14,16 @@ st.header("Community Events Near You", divider='green')
 
 data = {} 
 data = requests.get('http://api:4000/m/migrant/events').json()
+logger.info(f'Data is: {data}')
+for row in data:
+  row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
 
+logger.info(type(data))
 edited_data = st.data_editor(
     data,
     column_config={
         "name": "Event Name",
-        "date": "Date",
+        "eventDate": "Date",
         "duration": "Duration in Hours",
     },
 )
@@ -38,10 +44,3 @@ with col2:
    st.caption("Samara and Akira Dahli celebrating graduation at Rutgers University")
    st.image("https://i.imgur.com/oNfXkWU.jpeg")
    st.caption("4th graders at Duncanville Elementary learning about the importance of healthy living")
-
-
-
-if st.button('Back', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/10_Migrant_Home.py')

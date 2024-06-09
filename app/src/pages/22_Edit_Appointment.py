@@ -13,6 +13,11 @@ st.header("Edit Appointment", divider='green')
 
 data = {} 
 data = requests.get('http://api:4000/c/city_council/appointments').json()
+logger.info(f'Data is: {data}')
+for row in data:
+  row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
+
+logger.info(type(data))
 
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
   appointment_ids = [item['appointmentID'] for item in data if 'appointmentID' in item]

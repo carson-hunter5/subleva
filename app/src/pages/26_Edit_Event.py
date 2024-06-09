@@ -30,7 +30,7 @@ if st.button("Change Event Info"):
  if edit_event_name and edit_event_date and edit_duration and edit_venue_capacity:
      edited_event_data = {
            "eventName" : str(edit_event_name),
-           "date" : str(edit_event_date),
+           "eventDate" : str(edit_event_date),
            "duration" : str(edit_duration),
            "venueCapacity" : str(edit_venue_capacity),
            "eventID" : str(id_to_edit)
