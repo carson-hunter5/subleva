@@ -1,12 +1,11 @@
 import logging
-import datetime
 import requests
 logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config (page_title=" Cancel Appointment", page_icon="📌")
 
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
@@ -31,15 +30,24 @@ edited_data = st.data_editor(
     },
 )
 
-col1, col2, col3 = st.columns(3, gap = "medium")
-
 json_data = data[0]
 logger.info(json_data)
 logger.info(type(json_data))
-appointment_to_delete = st.selectbox("Select an Appointment ID to  Delete:", options = [json_data["appointmentID"]])
+
+if data:
+    appointment_ids = [row["appointmentID"] for row in data]
+    appointment_to_delete = st.selectbox("Select an Appointment ID to Delete:", options=appointment_ids)
 
 if st.button("Cancel Appointment"):
-  requests.delete(f"""http://api:4000/m/migrant/appointment_delete/{attendeeID}/{appointment_to_delete}""")
+      response = requests.delete(f"http://api:4000/m/migrant/appointment_delete/{attendeeID}/{appointment_to_delete}")
+      if response.status_code == 200:
+                st.session_state["message"] = ":green[Appointment Cancelled]"
+      else:
+                st.session_state["message"] = ":red[Failed to Cancel.]"
+
+      if "message" in st.session_state:
+         st.write(st.session_state["message"])
+      del st.session_state["message"]
 
 
 if st.button('Back', 

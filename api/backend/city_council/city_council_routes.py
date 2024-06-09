@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response, current_app
+from flask import Flask, Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
 
@@ -67,19 +67,19 @@ def add_communityEvent():
 # Edit the event 
 @city_council.route('/city_council/communityEvent', methods=['PUT'])
 def update_communityEvent():
-    current_app.logger.info('PUT /city_council route')
+    current_app.logger.info('PUT /city_council/communityEvent route')
     event_info = request.json
-    eventID = event_info['eventID']
-    duration = event_info['duration']
-    name = event_info['eventName']
-    eventDate = event_info['eventDate']
-    venueCapacity = event_info['venueCapacity']
+    eventID = event_info.get('eventID')
+    duration = event_info.get('duration')
+    name = event_info.get('eventName')
+    eventDate = event_info.get('eventDate')
+    venueCapacity = event_info.get('venueCapacity')
 
-    query = f"UPDATE communityEvent SET duration = {duration}, name = '{name}', eventDate = '{eventDate}', venueCapacity = {venueCapacity} WHERE eventID = {eventID}"
+    query = f"UPDATE communityEvent SET duration = {duration}, eventDate = '{eventDate}', name = '{name}', venueCapacity = '{venueCapacity}' WHERE eventID = {eventID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    return 'Event updated!'
+    return jsonify({'message': 'Event updated successfully'}), 200
 
 # Delete the event 
 @city_council.route('/city_council/communityEvent/<eventID>', methods=['DELETE'])

@@ -1,13 +1,15 @@
 import logging
-import datetime
 import requests
 logger = logging.getLogger()
 
 import streamlit as st
 from modules.nav import SideBarLinks
+
+st.set_page_config (page_title="Population Data", page_icon="🗺️")
+
 SideBarLinks()
 
-#Get the 
+#Get the country data
 st.write("Displaying all country populations")
 
 data = {} 

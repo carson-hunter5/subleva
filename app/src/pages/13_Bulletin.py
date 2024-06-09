@@ -3,7 +3,7 @@ import requests
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="Bulletin", page_icon="🙏")
+st.set_page_config (page_title="Community Bulletin", page_icon="📝")
 SideBarLinks()
 add_logo("assets/logo.png", height=400)
 
@@ -40,9 +40,17 @@ with col1:
             "migrantID" : migrantID
         }
         response = requests.post("http://api:4000/m/migrant/add_post",json=post_data)
+        if response.status_code == 200:
+                st.session_state["message"] = ":green[Posted Sucessfully!]"
+        else:
+                st.session_state["message"] = ":red[Failed to post.]"
+
+        if "message" in st.session_state:
+         st.write(st.session_state["message"])
+    del st.session_state["message"]
 
 with col2:
-   st.subheader("Trending Post")
+   st.header("Trending Post", divider = 'green')
    st.image("https://i.imgur.com/Hcmqbu2.jpeg")
    st.caption("Congrats to my baby sister Samara fopr graduating from Rutgers University!")
    st.caption("#firstgen    #youdidit    #classof2k23")

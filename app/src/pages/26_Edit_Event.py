@@ -2,10 +2,9 @@ import streamlit as st
 import requests
 import datetime
 import requests
-import logging 
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="Community Event Manager", page_icon="🙏")
+st.set_page_config (page_title="Community Event Manager", page_icon="💻")
 
 SideBarLinks()
 
@@ -35,7 +34,22 @@ if st.button("Change Event Info"):
            "venueCapacity" : str(edit_venue_capacity),
            "eventID" : str(id_to_edit)
        }
-     requests.put("http://api:4000/c/city_council/communityEvent", json = edited_event_data)
+     
+     response = requests.put("http://api:4000/c/city_council/communityEvent", json=edited_event_data)
+     try:
+         response_json = response.json()
+         error_message = response_json.get('error', 'Unknown error')
+     except ValueError:
+         error_message = 'Invalid response from server'
+
+     if response.status_code == 200:
+         st.session_state["message"] = f":green[Event Edited Successfully!]"
+     else:
+         st.session_state["message"] = f":red[Failed to Edit Event: {error_message}]"
+
+     if "message" in st.session_state:
+         st.write(st.session_state["message"])
+         del st.session_state["message"]
 
 if st.button('Back', 
              type='primary',

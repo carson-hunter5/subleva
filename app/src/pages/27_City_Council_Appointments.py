@@ -1,7 +1,5 @@
 import streamlit as st
 import requests
-import datetime
-import requests
 from streamlit_extras.app_logo import add_logo
 import logging 
 from modules.nav import SideBarLinks
@@ -33,35 +31,24 @@ edited_data = st.data_editor(
     },
 )
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
-  st.subheader("Filter Appointments", divider='green')
-  options = st.multiselect(
-    "Select Appointment Topic to View",
-    ["Training", "Marketing", "Accounting", "Services", "Sales", 
-     "Engineering", "Legal", "Support", "Human Resources", 
-     "Business Development","Product Management", "Reseearch and Development"],
-    default=None)
-
-
-with col2:
-   st.subheader("Appointment Editors", divider='green')
    if st.button('New Appointment', 
              type='primary',
              use_container_width=True):
     st.switch_page('pages/28_New_Appointment.py')
 
+
+with col2:
    if st.button('Edit Appointment', 
              type='primary',
              use_container_width=True):
     st.switch_page('pages/22_Edit_Appointment.py')
 
+
+with col3:
    if st.button('Cancel Appointment', 
              type='primary',
              use_container_width=True):
     st.switch_page('pages/29_Cancel_Appointment.py')
-
-
-st.write("")
-st.write("")

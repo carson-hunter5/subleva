@@ -41,7 +41,15 @@ if st.button("Change Appointment Info"):
           "subject" : str(edit_subject),
           "weekday" : str(edit_weekday)
       }
-    requests.put("http://api:4000/c/city_council/appointments", json = edited_appointment_data)
+    response = requests.put("http://api:4000/c/city_council/appointments", json=edited_appointment_data)
+    if response.status_code == 200:
+          st.session_state["message"] = ":green[Appointment Edited Successfully!]"
+    else:
+          st.session_state["message"] = ":red[Failed to Edit Appointment.]"
+
+    if "message" in st.session_state:
+          st.write(st.session_state["message"])
+          del st.session_state["message"]
 
 if st.button('Back', 
              type='primary',

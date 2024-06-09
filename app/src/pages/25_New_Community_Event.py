@@ -3,10 +3,9 @@ import requests
 import datetime
 import requests
 from streamlit_extras.app_logo import add_logo
-import logging 
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="Community Event Manager", page_icon="🙏")
+st.set_page_config (page_title="Community Event Manager", page_icon="💻")
 
 add_logo("assets/logo.png", height=400)
 
@@ -29,6 +28,15 @@ if st.button("Submit"):
             "venueCapacity" : venue_capacity
         }
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
+        if response.status_code == 200:
+                st.session_state["message"] = ":green[Event Created Sucessfully!]"
+                st.balloons()
+        else:
+                st.session_state["message"] = ":red[Failed to Create Event.]"
+
+        if "message" in st.session_state:
+         st.write(st.session_state["message"])
+    del st.session_state["message"]
 
 if st.button('Back', 
              type='primary',

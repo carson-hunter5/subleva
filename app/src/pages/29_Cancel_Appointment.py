@@ -1,9 +1,7 @@
 import streamlit as st
 import requests
-import datetime
 import requests
-from streamlit_extras.app_logo import add_logo
-import logging 
+from streamlit_extras.app_logo import add_logo 
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="Appointment Manager", page_icon="📅")
@@ -12,6 +10,7 @@ add_logo("assets/logo.png", height=400)
 
 SideBarLinks()
 
+#Cancel appointment
 st.header("Cancel Appointment", divider='green')
 
 data = {} 
@@ -29,7 +28,15 @@ if st.button('Delete Appointment'):
         "appointmentID" : str(id_to_delete)
     }
     response = requests.delete(f'http://api:4000/c/city_council/appointments/{id_to_delete}')
-    data = [item for item in data if item['appointmentID'] != id_to_delete] 
+    data = [item for item in data if item['appointmentID'] != id_to_delete]
+    if response.status_code == 200:
+                st.session_state["message"] = ":green[Appointment Deleted Sucessfully!]"
+    else:
+                st.session_state["message"] = ":red[Failed to Delete Appointment.]"
+
+    if "message" in st.session_state:
+         st.write(st.session_state["message"])
+    del st.session_state["message"]
 
 if st.button('Back', 
              type='primary',
