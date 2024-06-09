@@ -31,7 +31,7 @@ def get_appointments(migrantID):
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute(f"""SELECT appointmentID, volunteerID, date FROM appointments WHERE migrantID = {migrantID}""")
+    cursor.execute(f"""SELECT appointmentID, volunteerID, appDate FROM appointments WHERE migrantID = {migrantID}""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -188,14 +188,12 @@ def add_new_post():
     current_app.logger.info(the_data)
 
     #extracting the variable
-    postID = the_data['postID']
     postContent = the_data['postContent']
     displayName = the_data['displayName']
     migrantID = the_data['migrantID']
 
     # Constructing the query
-    query = 'INSERT INTO posts (postID, postContent, createdAt, displayName, migrantID) VALUES ('
-    query += "'" + str(postID) + "',"
+    query = 'INSERT INTO posts (postContent, createdAt, displayName, migrantID) VALUES ('
     query += "'" + postContent + "',"
     query += 'NOW(),'
     query += "'" + displayName + "',"

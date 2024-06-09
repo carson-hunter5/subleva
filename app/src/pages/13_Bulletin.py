@@ -31,13 +31,11 @@ with col1:
  migrantID = st.session_state["id"]
  displayName = st.text_input("Display Name")
  post_content = st.text_input("Post Content")
- post_id = st.number_input("Post ID",value=0, step=1)
 
  if st.button("Submit"):
     if post_content and displayName and migrantID:
         post_data = {
             "postContent" : post_content,
-            "postID" : post_id,
             "displayName" : displayName,
             "migrantID" : migrantID
         }
