@@ -16,17 +16,17 @@ st.header("New Appoinment", divider='green')
 
 # Creates an Appointment
 volunteerID = st.number_input("Volunteer ID", value=0, step=1)
-date = st.date_input("Event Date", value=datetime.date.today())
+appDate = st.date_input("Event Date", value=datetime.date.today())
 subject = st.selectbox("Appointment Topic",("Training", "Marketing", "Accounting", "Services", "Sales", 
      "Engineering", "Legal", "Support", "Human Resources", 
      "Business Development","Product Management", "Reseearch and Development"))
 weekday = st.selectbox("Weekday", ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
 
 if st.button("Submit"):
-    if volunteerID and date and subject and weekday:
+    if volunteerID and appDate and subject and weekday:
         post_data = {
             "volunteerID" : volunteerID,
-            "date" : str(date),
+            "appDate" : str(appDate),
             "subject" : subject,
             "weekday" : weekday
         }

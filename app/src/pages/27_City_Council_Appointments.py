@@ -23,7 +23,7 @@ edited_data = st.data_editor(
     data,
     column_config={
         "volunteerID": "Volunteer ID",
-        "date": "Date",
+        "appDate": "Date",
         "appointmentID": "Appointment ID",
         "subject" : "Appointment Topic",
         "weekday" : "Day of the Week",
