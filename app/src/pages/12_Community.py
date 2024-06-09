@@ -5,7 +5,8 @@ logger = logging.getLogger(__name__)
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
-st.set_page_config (page_title="Community Events", page_icon="🙏")
+st.set_page_config (page_title="Community Events", page_icon="🎟️")
+
 SideBarLinks()
 
 add_logo("assets/logo.png", height=400)

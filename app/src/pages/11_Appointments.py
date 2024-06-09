@@ -1,14 +1,13 @@
 import streamlit as st
 import requests
 import logging
-import datetime
 import requests
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
-st.set_page_config (page_title="Appointment", page_icon="🙏")
+st.set_page_config (page_title="Appointment", page_icon="📌")
 SideBarLinks()
 add_logo("assets/logo.png", height=400)
 

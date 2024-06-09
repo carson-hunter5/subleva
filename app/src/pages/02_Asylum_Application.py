@@ -1,13 +1,15 @@
 import logging
 logger = logging.getLogger()
 
-import json
 import pandas as pd
 import requests
 import streamlit as st
 import numpy as np
 from modules.nav import SideBarLinks
+
 SideBarLinks()
+
+st.set_page_config (page_title="Asylum Applications", page_icon="🗂️")
 
 st.header("**Predict Asylum Applications**", divider='green')
 

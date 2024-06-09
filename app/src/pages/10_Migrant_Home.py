@@ -4,13 +4,12 @@ logger = logging.getLogger()
 import streamlit as st
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config(layout = 'wide', page_title="Migrant Home", page_icon="🏠")
 
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
 st.title(f"Welcome, {st.session_state['first_name']}.")
-st.write('### What would you like to do today?')
 
 col1, col2 = st.columns(2)
 
@@ -42,3 +41,12 @@ with col2:
              type='primary',
              use_container_width=True):
    st.switch_page('pages/13_Bulletin.py')
+
+  st.write("")
+  st.write("")
+
+  st.subheader("Appointment Stats", divider='green')
+  opinion = st.selectbox(
+    "**How would you rate your last appointment?**",
+    options=["⭐️", "⭐️⭐️", "⭐️⭐️⭐️", "⭐️⭐️⭐️⭐️", "⭐️⭐️⭐️⭐️⭐️"])
+  st.write("You selected:", opinion)

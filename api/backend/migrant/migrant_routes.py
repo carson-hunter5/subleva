@@ -1,29 +1,12 @@
-from flask import Blueprint, request, jsonify, make_response, current_app
+from flask import Flask, Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
 
 migrant = Blueprint('migrant', __name__)
+app = Flask(__name__)
 
 # Appointment 
 
-"""""
-# Get all appointments from the database for a specific migrant
-@migrant.route('/migrant/appointments', methods=['GET'])
-def get_migrant(migrantID):
-    current_app.logger.info('GET /migrant/appointments route')
-    cursor = db.get_db().cursor()
-    cursor.execute('select migrantID from appointments where migrantID = {0}'.format(migrantID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
-"""
 # Get all appointments from the database for a specifc migrant
 @migrant.route('/migrant/appointments/<id>', methods=['GET'])
 def get_migrant_appointment(id): 
@@ -57,10 +40,12 @@ def get_appt(weekday):
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute(f"""SELECT subject, appDate, weekday, v.name, COUNT(aa.attendeeID) FROM appointments JOIN appointmentAttendees
-                    aa  ON appointments.appointmentID = aa.appointmentID 
-                   JOIN volunteers v on appointments.volunteerID = v.id 
-                   WHERE weekday = '{weekday}' GROUP BY aa.appointmentID""")
+    cursor.execute(f"""SELECT appointments.appointmentID, subject, appDate, weekday, v.name, COUNT(aa.attendeeID) 
+                   FROM appointments 
+                   JOIN appointmentAttendees aa ON appointments.appointmentID = aa.appointmentID 
+                   JOIN volunteers v ON appointments.volunteerID = v.id 
+                   WHERE weekday = '{weekday}' 
+                   GROUP BY aa.appointmentID""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -82,22 +67,27 @@ def get_appt(weekday):
 # Adds the assigned migrantID to the attendee appointments table
 @migrant.route('/make_appointment', methods=['POST'])
 def add_appointment():
-    
-    # collecting data from the request object 
-    the_data = request.json
-    current_app.logger.info(the_data)
+    try:
+        # Collecting data from the request object
+        the_data = request.json
+        current_app.logger.info(the_data)
 
-    attendeeID = the_data['attendeeID']
-    appointmentID = the_data['appointmentID']
+        attendeeID = the_data['attendeeID']
+        appointmentID = the_data['appointmentID']
 
-    # Constructing the query
-    query = f"""insert into appointmentAttendees (attendeeID, appointmentID) values ('{attendeeID}','{appointmentID}')"""
-    current_app.logger.info(query)
+        # Constructing the query using parameterized queries to prevent SQL injection
+        query = """INSERT INTO appointmentAttendees (attendeeID, appointmentID) VALUES (%s, %s)"""
+        current_app.logger.info(query)
 
-    # executing and committing the insert statement 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db().commit()
+        # Executing and committing the insert statement
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (attendeeID, appointmentID))
+        db.get_db().commit()
+
+        return jsonify({'message': 'Appointment added successfully'}), 200
+    except Exception as e:
+        current_app.logger.error(f"Error adding appointment: {e}")
+        return jsonify({'error': 'Failed to add appointment', 'details': str(e)}), 500
 
 # Show all the appoinments linked to a certain migrant
 @migrant.route('/migrant/appointments_cancel/<id>', methods=['GET'])
@@ -125,45 +115,18 @@ def get_migrant_appointment_to_cancel(id):
 
      return jsonify(json_data)
 
-# Creates a new appointment for a migrant
-
-""""
-@migrant.route('/migrant', methods=['POST'])
-def add_appointment():
-    
-    # collecting data from the request object 
-    the_data = request.json
-    current_app.logger.info(the_data)
-
-    #extracting the variable
-    migrantID = the_data['migrantID']
-    volunteerID = the_data['volunteerID']
-    date = the_data['date']
-    appointmentID = the_data['appointmentID']
-
-    # Constructing the query
-    query = 'insert into appointments (migrantID, volunteerID, date, appointmentID) values ("'
-    query += migrantID + '", "'
-    query += volunteerID + '", "'
-    query += date + '", '
-    query += appointmentID + '", "'
-    
-    current_app.logger.info(query)
-
-    # executing and committing the insert statement 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db().commit()
-    
-    return 'New Appointment'
-"""
 # Delete the appointment for a specifc migrant
 @migrant.route('/migrant/appointment_delete/<migrantID>/<apptID>', methods=['DELETE'])
-def delete_migrant_appointment(migrantID,apptID):
+def delete_migrant_appointment(migrantID, apptID):
     current_app.logger.info('DELETE /migrant/appointment/<migrantID> route')
     cursor = db.get_db().cursor()
-    cursor.execute(f"""DELETE FROM appointmentAttendees aa WHERE aa.AttendeeID = '{migrantID}' AND aa.appointmentID = '{apptID}'""")
-    db.get_db().commit()
+    try:
+        cursor.execute(f"""DELETE FROM appointmentAttendees WHERE AttendeeID = %s AND appointmentID = %s""", (migrantID, apptID))
+        db.get_db().commit()
+        return jsonify({'message': 'Appointment deleted successfully'}), 200
+    except Exception as e:
+        current_app.logger.error(f"Error deleting appointment: {e}")
+        return jsonify({'error': 'Failed to delete appointment', 'details': str(e)}), 500
 
 #Posts
 
@@ -239,23 +202,6 @@ def add_new_post():
     db.get_db().commit()
       
     return 'New Post'
-
-"""""
-# Edit the post for a specifc migrant
-@migrant.route('/migrant/post', methods=['PUT'])
-def update_migrant_post():
-    current_app.logger.info('PUT /migrant route')
-    post_info = request.json
-    post_content = post_info['postContent']
-    displayName = post_info['displayName']
-
-    query = 'UPDATE posts SET post_content = %s, displayName = %s'
-    data = (post_content, displayName)
-    cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
-    db.get_db().commit()
-    return 'Post updated!'
-"""""
 
 # Delete the post for a specifc migrant
 @migrant.route('/migrant/post/<postID>', methods=['DELETE'])

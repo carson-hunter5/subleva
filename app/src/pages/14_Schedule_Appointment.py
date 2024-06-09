@@ -1,81 +1,90 @@
 import logging
-import datetime
 import requests
+import pandas as pd
 logger = logging.getLogger()
 
 import streamlit as st
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config(page_title="Booking Appointment", page_icon="📌")
 
-# Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-migrant_id = st.session_state["id"]
-
 # Schedule a new appointment
-
 st.subheader("**Schedule a New Appointment**", divider='green')
 
-weekday = st.selectbox(label = "Select a Weekday to View", options = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) 
-if st.button("Pick Weekday"):
-       response = requests.get(f'http://api:4000/m/migrant/show_appt/{weekday}').json()
-       logger.info(f'Data is: {response}')
-       for row in response:
-           row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
+edited_data = None  # Define edited_data outside the block
+appointment_to_book = None  # Define appointment_to_book outside the block
 
-       logger.info(type(response))
-       edited_data = st.data_editor(
-       response,
-
-    column_config={
-        "appDate": "Date",
-        "COUNT(aa.attendeeID)":"Spots Reserved",
-        "appointmentID": "Appointment ID",
-        "name": "Volunteer Name",
-        "subject": "Topic",
-        "weekday": "Day of the Week"
-    },
-)
-
-appt_id = st.number_input("Input Appointment to Reserve", step= 1, value=0)
-if st.button("Reserve Appointment"):
-       post_data = {
-           "appointmentID" : appt_id,
-           "attendeeID" : migrant_id   
-       }
-       response = requests.post("http://api:4000/m/make_appointment",json=post_data)
-
-""""
-if isinstance(data, list) and all(isinstance(item, dict) for item in data):
-    weekdays_list = [item['weekday'] for item in data if 'weekday' in item]
-
-
-if weekdays_list:
-    selected_day = st.selectbox("Select a Day", options=weekdays_list)
-
-if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+weekday = st.selectbox(label="Select an Appointment Day", options=("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+if st.button("Choose Appointment Day"):
+    response = requests.get(f'http://api:4000/m/migrant/show_appt/{weekday}')
+    logger.info(f'Response status code: {response.status_code}')
+    
+    if response.status_code == 200:
+        data = response.json()  
+        logger.info(f'Data is: {data}')
         
-        available_appointments = [item['appointmentID'] for item in data if 'appointmentID' in item]
+        for row in data:
+            row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
 
-        if available_appointments:
-            selected_appointment = st.selectbox("Select an Appointment Slot", options=available_appointments)
+        logger.info(type(data))
+        edited_data = st.data_editor(
+            data,
+            column_config={
+                "appDate": "Date",
+                "COUNT(aa.attendeeID)": "Reserved Spots",
+                "appointmentID": "Appointment ID",
+                "subject": "Topic",
+                "weekday": "Day of the Week",
+                "name": "Volunteer Name"
+            },
+        )
+    else:
+        logger.error(f'Error getting appointment data. Status code: {response.status_code}')
 
-            migrantID = st.session_state.get("id")
-"""
-"""
-if st.button("Submit"):
-                if selected_appointment and migrantID:
-                    post_data = {
-                        "appointmentID": selected_appointment,
-                        "migrantID": migrantID,
-                        "day": selected_day
-                    }
+if edited_data: 
+    appointment_ids = [row["appointmentID"] for row in data]
+    appointment_to_book = st.selectbox("Select an Appointment ID to Book:", options=appointment_ids)
 
-response = requests.post("http://api:4000/m/migrant/",json=post_data)
-"""
+# Use edited_data variable outside the block
+#if isinstance(edited_data, pd.DataFrame) and not edited_data.empty:
+    #appointment_ids = edited_data['appointmentID'].tolist()
+    #appointment_to_book = st.selectbox("Select an Appointment ID to Schedule", options=appointment_ids)
 
-if st.button('Back', 
+headers = {'Content-Type': 'application/json'}
+
+# 
+volunteerID = ()
+apptDate = ()
+subject = ()
+weekday = ()
+
+if st.button('Book Appointment'):
+    if volunteerID and apptDate  and subject and weekday:
+        json_data = edited_data.to_json(orient='records')
+        post_data = {
+            "volunteerID" : volunteerID,
+            "apptDate" : str(apptDate),
+            #"appointmentID" : appointmentID,
+            "subject" : subject, 
+            "weekday": weekday
+        }
+         
+        response = requests.post(f"http://api:4000/m/make_appointment", json= json_data, headers=headers)
+        if response.status_code == 200:
+                st.session_state["message"] = ":green[Appointment Booked!]"
+                st.balloons()
+        else:
+                st.session_state["message"] = ":red[Failed to book appointment.]"
+
+        if "message" in st.session_state:
+                st.write(st.session_state["message"])
+                del st.session_state["message"]
+    else:
+        st.error("Please select or edit an appointment before booking.")
+
+if st.button('Back',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/11_Appointments.py')
+    st.switch_page('pages/11_Appointments.py')

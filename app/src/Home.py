@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config(layout = 'wide', page_title="Subleva", page_icon="🏠")
 
 st.session_state['authenticated'] = False
 

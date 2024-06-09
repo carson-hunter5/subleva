@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import datetime
 import requests
 from streamlit_extras.app_logo import add_logo
 import logging 
@@ -8,7 +7,7 @@ from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
-st.set_page_config (page_title="Community Event Manager", page_icon="🙏")
+st.set_page_config (page_title="Community Event Manager", page_icon="💻")
 
 add_logo("assets/logo.png", height=400)
 

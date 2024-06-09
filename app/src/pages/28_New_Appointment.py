@@ -3,7 +3,6 @@ import requests
 import datetime
 import requests
 from streamlit_extras.app_logo import add_logo
-import logging 
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="Appointment Manager", page_icon="📅")
@@ -31,7 +30,15 @@ if st.button("Submit"):
             "weekday" : weekday
         }
         response = requests.post("http://api:4000/c/council/add_appointments", json=post_data)
-        st.balloons()
+        if response.status_code == 200:
+                st.session_state["message"] = ":green[Appointment Created Sucessfully!]"
+                st.balloons()
+        else:
+                st.session_state["message"] = ":red[Failed to Create Appointment.]"
+
+        if "message" in st.session_state:
+         st.write(st.session_state["message"])
+    del st.session_state["message"]
 
 
 if st.button('Back', 
