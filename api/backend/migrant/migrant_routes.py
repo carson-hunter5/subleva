@@ -34,7 +34,7 @@ def get_appointments(attendeeID):
 
 # Get all appointments from the database
 @migrant.route('/migrant/show_appt/<day>', methods=['GET'])
-def get_appt(day):
+def get_appt(weekday):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
@@ -42,7 +42,7 @@ def get_appt(day):
     cursor.execute(f"""SELECT subject, date, weekday, v.name, COUNT(aa.attendeeID) FROM appointments JOIN appointmentAttendees
                     aa  ON appointments.appointmentID = aa.appointmentID 
                    JOIN volunteers v on appointments.volunteerID = v.id 
-                   WHERE weekday = '{day}' GROUP BY aa.appointmentID""")
+                   WHERE weekday = '{weekday}' GROUP BY aa.appointmentID""")
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]

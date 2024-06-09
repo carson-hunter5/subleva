@@ -8,7 +8,7 @@ SideBarLinks()
 
 add_logo("assets/logo.png", height=400)
 
-st.header("Community Events Near You")
+st.header("Community Events Near You", divider='green')
 
 data = {} 
 data = requests.get('http://api:4000/m/migrant/events').json()
@@ -22,7 +22,7 @@ edited_data = st.data_editor(
     },
 )
 
-st.header("Photo Gallery")
+st.header("Photo Gallery", divider='green')
 
 col1, col2 = st.columns(2)
 with col1:

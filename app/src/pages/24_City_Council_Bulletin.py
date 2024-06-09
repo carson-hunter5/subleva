@@ -8,7 +8,7 @@ st.set_page_config (page_title="Manage Community Bulletin", page_icon="")
 add_logo("assets/logo.png", height=400)
 
 SideBarLinks()
-st.header("All Bulletin Posts")
+st.header("All Bulletin Posts", divider='green')
 
 data = {} 
 try:

@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS communityEvent
 CREATE TABLE IF NOT EXISTS appointmentAttendees
 (
     attendeeID INT,
-    appointmentID    INT,
+    appointmentID    INT AUTO_INCREMENT,
     primary key (attendeeID, appointmentID),
     FOREIGN KEY (attendeeID) REFERENCES users(id),
     FOREIGN KEY (appointmentID) REFERENCES appointments(appointmentID)

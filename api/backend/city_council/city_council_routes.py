@@ -43,15 +43,13 @@ def add_communityEvent():
 
     #extracting the variable
     date = the_data['date']
-    eventID = the_data['eventID']
     name = the_data['eventName']
     duration = the_data['duration']
     venueCapacity = the_data['venueCapacity']
 
     # Constructing the query
-    query = 'INSERT INTO communityEvent (date, eventID, name, duration, venueCapacity) VALUES ('
+    query = 'INSERT INTO communityEvent (date, name, duration, venueCapacity) VALUES ('
     query += "'" + date + "',"
-    query += "'" + str(eventID) + "',"
     query += "'" + name + "',"
     query += "'" + str(duration) + "',"
     query += "'" + str(venueCapacity) + "')"
@@ -99,12 +97,12 @@ def delete_event(eventID):
 # Appointments
 
 # Get all appointments 
-@city_council.route('/city_council', methods=['GET'])
+@city_council.route('/city_council/appointments', methods=['GET'])
 def get_appointments():
     current_app.logger.info('city_council_routes.py: GET /appointments')
     cursor = db.get_db().cursor()
     cursor.execute('select volunteerID, date,\
-        appointmentID, subject, weekday from appointment')
+        appointmentID, subject, weekday from appointments')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -116,7 +114,7 @@ def get_appointments():
     return the_response
 
 # Creates a new appointment 
-@city_council.route('/city_council', methods=['POST'])
+@city_council.route('/council/add_appointments', methods=['POST'])
 def add_appointment():
     
     # collecting data from the request object 
@@ -126,15 +124,13 @@ def add_appointment():
     #extracting the variable
     volunteerID = the_data['volunteerID']
     date = the_data['date']
-    appointmentID = the_data['appointmentID']
     subject = the_data['subject']
     weekday = the_data['weekday']
 
     # Constructing the query
-    query = 'insert into appointments (volunteerID, date, appointmentID, subject, weekday) values ("'
+    query = 'INSERT INTO appointments (volunteerID, date, subject, weekday) VALUES ('
     query += volunteerID + '", "'
     query += date + '", '
-    query += appointmentID + '", '
     query += subject + '", '
     query += weekday + '", "'
     
@@ -148,9 +144,9 @@ def add_appointment():
     return 'New Appointment'
 
 # Edit the appointment
-@city_council.route('/city_council', methods=['PUT'])
+@city_council.route('/city_council/edit_appointments', methods=['PUT'])
 def update_appointmentEvent():
-    current_app.logger.info('PUT /city_council route')
+    current_app.logger.info('PUT /city_council/appointments route')
     appointment_info = request.json
     volunteerID = appointment_info['volunteerID']
     weekday = appointment_info['weekday']
@@ -169,7 +165,7 @@ def update_appointmentEvent():
 def delete_appointment(appointmentID):
     current_app.logger.info('DELETE /city_council/appointment/<appointmentID> route')
     
-    query = f"""DELETE FROM appointment WHERE appointmentID = {appointmentID}"""
+    query = f"""DELETE FROM appointments WHERE appointmentID = {appointmentID}"""
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()

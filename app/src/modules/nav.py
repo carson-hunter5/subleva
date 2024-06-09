@@ -47,7 +47,7 @@ def BulletinManagementNav():
     st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🔖')
 
 def AppointmentManagementNav():
-    st.sidebar.page_link("pages/27_City_Council_Appointments.py", label="Manage Appointments", icon='💻')
+    st.sidebar.page_link("pages/27_City_Council_Appointments.py", label="Manage Appointments", icon='📅')
 
 # --------------------------------Links Function -----------------------------------------------
 # Define the sidebar links function
@@ -91,7 +91,7 @@ def SideBarLinks(show_home=False):
             CityCouncilHomeNav()
             EventManagementNav()
             BulletinManagementNav()
-            AppointmentManagementNav
+            AppointmentManagementNav()
             
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
