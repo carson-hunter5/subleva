@@ -114,6 +114,8 @@ def get_appointments():
     the_response.mimetype = 'application/json'
     return the_response
 
+
+
 # Creates a new appointment 
 @city_council.route('/council/add_appointments', methods=['POST'])
 def add_appointment():

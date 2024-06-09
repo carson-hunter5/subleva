@@ -13,7 +13,7 @@ services:
     container_name: web-api
     hostname: web-api
     volumes: ['./api:/apicode']
-      
+    restart: unless-stopped
     ports:
       - 4000:4000
 
