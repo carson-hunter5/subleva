@@ -20,14 +20,13 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     if event_ids:
         id_to_edit = st.selectbox("Select the Event ID", options=event_ids)
 
-
 edit_event_name = st.text_input("New Event Name")
 edit_duration = st.number_input("New Duration",value=0, step=1, placeholder="Type a value...")
 edit_venue_capacity = st.number_input("New Venue Capcity",value=0, step=1, placeholder="Type a value...")
 edit_event_date = st.date_input("New Event Date", value=datetime.date.today())
 
 
-if st.button("Submit Event"):
+if st.button("Change Event Info"):
  if edit_event_name and edit_event_date and edit_duration and edit_venue_capacity:
      edited_event_data = {
            "eventName" : str(edit_event_name),

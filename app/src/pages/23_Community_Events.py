@@ -21,7 +21,7 @@ edited_data = st.data_editor(
     data,
     column_config={
         "name": "Event Name",
-        "date": "Date",
+        "eventDate": "Date",
         "duration": "Duration in Hours",
         "eventID" : "Event ID",
         "venueCapacity":"Venue Capacity"

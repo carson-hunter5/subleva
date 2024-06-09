@@ -6,7 +6,7 @@ from streamlit_extras.app_logo import add_logo
 import logging 
 from modules.nav import SideBarLinks
 
-st.set_page_config(layout = 'wide')
+st.set_page_config (page_title="Appointment Manager", page_icon="📅")
 
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
@@ -43,13 +43,22 @@ with col1:
 
 
 with col2:
+   st.subheader("Appointment Editors", divider='green')
    if st.button('New Appointment', 
              type='primary',
              use_container_width=True):
     st.switch_page('pages/28_New_Appointment.py')
 
-
-if st.button('Back', 
+   if st.button('Edit Appointment', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/20_City_Council_Home.py')
+    st.switch_page('pages/22_Edit_Appointment.py')
+
+   if st.button('Cancel Appointment', 
+             type='primary',
+             use_container_width=True):
+    st.switch_page('pages/29_Cancel_Appointment.py')
+
+
+st.write("")
+st.write("")

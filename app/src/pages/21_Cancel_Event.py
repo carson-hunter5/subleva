@@ -17,7 +17,6 @@ st.header("Cancel Event", divider='green')
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
 
-
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     event_ids = [item['eventID'] for item in data if 'eventID' in item]
 

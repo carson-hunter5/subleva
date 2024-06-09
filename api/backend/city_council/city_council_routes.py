@@ -64,7 +64,7 @@ def add_communityEvent():
     return 'New Event'
 
 
-# Edit the event for a specifc migrant
+# Edit the event 
 @city_council.route('/city_council/communityEvent', methods=['PUT'])
 def update_communityEvent():
     current_app.logger.info('PUT /city_council route')
@@ -131,13 +131,7 @@ def add_appointment():
     weekday = the_data['weekday']
 
     # Constructing the query
-    #query = 'INSERT INTO appointments (volunteerID, date, subject, weekday) VALUES ('
     query = f"INSERT INTO appointments (volunteerID, appDate, subject, weekday) VALUES ('{volunteerID}','{appDate}','{subject}','{weekday}')" 
-    #"'" + str(volunteerID) + '", "'
-    #query += "'" + appDate + '", '
-    #query += "'" + subject + '", '
-    #query += "'" + weekday + '")'
-    
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -148,33 +142,33 @@ def add_appointment():
     return 'New Appointment'
 
 # Edit the appointment
-@city_council.route('/city_council/edit_appointments', methods=['PUT'])
+@city_council.route('/city_council/appointments', methods=['PUT'])
 def update_appointmentEvent():
-    current_app.logger.info('PUT /city_council/appointments route')
+    current_app.logger.info('PUT /city_council/edit_appointments route')
     appointment_info = request.json
     volunteerID = appointment_info['volunteerID']
-    weekday = appointment_info['weekday']
-    subject = appointment_info['subject']
     appDate = appointment_info['appDate']
     appointmentID = appointment_info['appointmentID']
+    subject = appointment_info['subject']
+    weekday = appointment_info['weekday']
 
-    query = f"UPDATE appointment SET volunteerID = {volunteerID}, subject = '{subject}', appDate = '{appDate}', weekday = {weekday} WHERE appointmentID = {appointmentID}"
+    query = f"UPDATE appointments SET volunteerID = {volunteerID}, appDate = '{appDate}', subject = '{subject}', weekday = '{weekday}' WHERE appointmentID = {appointmentID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
     return 'Appointment updated!'
 
 # Delete the appointment 
-@city_council.route('/city_council/appointment/<appointmentID>', methods=['DELETE'])
+@city_council.route('/city_council/appointments/<appointmentID>', methods=['DELETE'])
 def delete_appointment(appointmentID):
-    current_app.logger.info('DELETE /city_council/appointment/<appointmentID> route')
+    current_app.logger.info('DELETE /city_council/appointments/<appointmentID> route')
     
     query = f"DELETE FROM appointments WHERE appointmentID = {appointmentID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
     
-    return 'Event cancelled!'
+    return 'Appointment cancelled!'
 
 # Demographics
 
