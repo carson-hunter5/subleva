@@ -43,13 +43,15 @@ CREATE TABLE IF NOT EXISTS volunteers
 CREATE TABLE IF NOT EXISTS appointments
 (
     volunteerID   INT NOT NULL,
-    date          DATE,
-    appointmentID INT NOT NULL,
+    appDate          DATE,
+    appointmentID INT AUTO_INCREMENT,
     subject VARCHAR(30),
     weekday VARCHAR(11),
     PRIMARY KEY (appointmentID),
     foreign key (volunteerID) REFERENCES volunteers (id)
 );
+
+SELECT * from appointments;
 
 CREATE TABLE IF NOT EXISTS posts
 (
@@ -64,7 +66,7 @@ CREATE TABLE IF NOT EXISTS posts
 
 CREATE TABLE IF NOT EXISTS communityEvent
 (
-    date          DATE,
+    eventDate          DATE,
     eventID       INT AUTO_INCREMENT,
     name          VARCHAR(255),
     duration      INT,
@@ -173,82 +175,82 @@ INSERT INTO volunteers (id, name) VALUES ('28', 'Cecilius Cato');
 INSERT INTO volunteers (id, name) VALUES ('29', 'Josee Ladlow');
 INSERT INTO volunteers (id, name) VALUES ('30', 'Alysa Takle');
 
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('1', '2023-10-25', '1', 'Legal', 'Wednesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('2', '2024-02-11', '2', 'Training', 'Sunday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('3', '2023-08-14', '3', 'Business Development', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('4', '2023-08-21', '4', 'Research and Development', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('5', '2023-09-07', '5', 'Legal', 'Thursday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('6', '2024-05-22', '6', 'Research and Development', 'Wednesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('7', '2024-02-06', '7', 'Training', 'Tuesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('8', '2024-02-25', '8', 'Services', 'Sunday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('9', '2023-09-12', '9', 'Human Resources', 'Tuesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('10', '2024-02-01', '10', 'Support', 'Thursday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('12', '2023-07-28', '11', 'Legal', 'Friday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('13', '2024-03-01', '12', 'Research and Development', 'Friday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('14', '2023-08-09', '13', 'Business Development', 'Wednesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('15', '2023-06-05', '14', 'Engineering', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('16', '2023-12-13', '15', 'Training', 'Wednesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('17', '2023-08-26', '16', 'Research and Development', 'Saturday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('18', '2023-12-30', '17', 'Sales', 'Saturday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('19', '2024-02-26', '18', 'Research and Development', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('20', '2024-02-01', '19', 'Services', 'Thursday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('21', '2023-10-28', '20', 'Training', 'Saturday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('22', '2023-10-02', '21', 'Training', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('23', '2023-12-09', '22', 'Training', 'Saturday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('24', '2024-01-24', '23', 'Marketing', 'Wednesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('25', '2023-08-14', '24', 'Accounting', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('26', '2023-11-10', '25', 'Accounting', 'Friday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('27', '2024-02-06', '26', 'Legal', 'Tuesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('28', '2023-10-30', '27', 'Marketing', 'Monday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('29', '2023-09-12', '28', 'Business Development', 'Tuesday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('30', '2023-09-24', '29', 'Support', 'Sunday');
-INSERT INTO appointments (volunteerID, date, appointmentID, subject, weekday) VALUES ('1', '2023-08-22', '30', 'Product Management', 'Tuesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('1', '2023-10-25', '1', 'Legal', 'Wednesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('2', '2024-02-11', '2', 'Training', 'Sunday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('3', '2023-08-14', '3', 'Business Development', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('4', '2023-08-21', '4', 'Research and Development', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('5', '2023-09-07', '5', 'Legal', 'Thursday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('6', '2024-05-22', '6', 'Research and Development', 'Wednesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('7', '2024-02-06', '7', 'Training', 'Tuesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('8', '2024-02-25', '8', 'Services', 'Sunday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('9', '2023-09-12', '9', 'Human Resources', 'Tuesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('10', '2024-02-01', '10', 'Support', 'Thursday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('12', '2023-07-28', '11', 'Legal', 'Friday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('13', '2024-03-01', '12', 'Research and Development', 'Friday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('14', '2023-08-09', '13', 'Business Development', 'Wednesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('15', '2023-06-05', '14', 'Engineering', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('16', '2023-12-13', '15', 'Training', 'Wednesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('17', '2023-08-26', '16', 'Research and Development', 'Saturday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('18', '2023-12-30', '17', 'Sales', 'Saturday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('19', '2024-02-26', '18', 'Research and Development', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('20', '2024-02-01', '19', 'Services', 'Thursday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('21', '2023-10-28', '20', 'Training', 'Saturday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('22', '2023-10-02', '21', 'Training', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('23', '2023-12-09', '22', 'Training', 'Saturday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('24', '2024-01-24', '23', 'Marketing', 'Wednesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('25', '2023-08-14', '24', 'Accounting', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('26', '2023-11-10', '25', 'Accounting', 'Friday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('27', '2024-02-06', '26', 'Legal', 'Tuesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('28', '2023-10-30', '27', 'Marketing', 'Monday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('29', '2023-09-12', '28', 'Business Development', 'Tuesday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('30', '2023-09-24', '29', 'Support', 'Sunday');
+INSERT INTO appointments (volunteerID, appDate, appointmentID, subject, weekday) VALUES ('1', '2023-08-22', '30', 'Product Management', 'Tuesday');
 
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('1', '175', 'et', '3', '2024-01-31');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('2', '88', 'sit amet', '5', '2023-11-27');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('3', '64', 'neque', '1', '2023-11-12');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('4', '34', 'quam sollicitudin', '3', '2024-04-08');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('5', '159', 'dolor quis', '3', '2023-11-23');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('6', '32', 'tristique', '6', '2023-08-24');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('7', '49', 'felis', '2', '2023-10-25');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('8', '25', 'blandit non', '3', '2023-06-19');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('9', '133', 'nascetur', '5', '2024-02-04');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('10', '166', 'in', '6', '2023-06-27');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('11', '71', 'in felis', '5', '2024-02-27');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('12', '165', 'id', '8', '2023-07-22');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('13', '167', 'curae nulla', '8', '2023-12-18');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('14', '73', 'tortor', '5', '2023-11-07');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('15', '12', 'placerat praesent', '8', '2023-12-01');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('16', '115', 'ac diam', '8', '2024-03-26');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('17', '3', 'posuere', '7', '2023-11-06');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('18', '102', 'maecenas', '5', '2023-11-08');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('19', '36', 'orci', '4', '2023-10-22');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('20', '27', 'est', '3', '2023-12-28');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('21', '69', 'pellentesque viverra', '1', '2023-10-10');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('22', '96', 'lacus at', '8', '2023-12-29');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('23', '72', 'faucibus orci', '7', '2023-11-05');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('24', '75', 'tortor', '5', '2023-11-02');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('25', '23', 'odio', '1', '2024-05-11');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('26', '115', 'porttitor', '1', '2024-05-24');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('27', '107', 'dui proin', '5', '2023-09-26');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('28', '140', 'ante vivamus', '7', '2024-04-05');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('29', '150', 'quam', '7', '2023-06-10');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('30', '9', 'imperdiet', '1', '2023-06-21');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('31', '181', 'amet sem', '7', '2023-10-27');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('32', '67', 'justo etiam', '6', '2023-12-06');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('33', '44', 'sit amet', '2', '2024-06-01');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('34', '11', 'a', '2', '2023-11-22');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('35', '166', 'sed', '6', '2023-07-31');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('36', '58', 'in felis', '5', '2023-09-27');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('37', '183', 'sapien', '6', '2023-11-15');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('38', '84', 'turpis', '5', '2024-02-03');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('39', '71', 'tristique', '8', '2024-02-01');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('40', '166', 'venenatis non', '3', '2024-04-18');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('41', '162', 'pulvinar sed', '7', '2023-09-17');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('42', '182', 'ligula', '2', '2024-05-12');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('43', '180', 'mattis', '1', '2024-02-02');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('44', '17', 'libero', '8', '2024-04-01');
-INSERT INTO communityEvent (eventID, venueCapacity, name, duration, date) VALUES ('45', '14', 'sed vestibulum', '8', '2024-04-12');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('1', '175', 'et', '3', '2024-01-31');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('2', '88', 'sit amet', '5', '2023-11-27');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('3', '64', 'neque', '1', '2023-11-12');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('4', '34', 'quam sollicitudin', '3', '2024-04-08');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('5', '159', 'dolor quis', '3', '2023-11-23');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('6', '32', 'tristique', '6', '2023-08-24');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('7', '49', 'felis', '2', '2023-10-25');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('8', '25', 'blandit non', '3', '2023-06-19');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('9', '133', 'nascetur', '5', '2024-02-04');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('10', '166', 'in', '6', '2023-06-27');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('11', '71', 'in felis', '5', '2024-02-27');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('12', '165', 'id', '8', '2023-07-22');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('13', '167', 'curae nulla', '8', '2023-12-18');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('14', '73', 'tortor', '5', '2023-11-07');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('15', '12', 'placerat praesent', '8', '2023-12-01');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('16', '115', 'ac diam', '8', '2024-03-26');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('17', '3', 'posuere', '7', '2023-11-06');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('18', '102', 'maecenas', '5', '2023-11-08');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('19', '36', 'orci', '4', '2023-10-22');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('20', '27', 'est', '3', '2023-12-28');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('21', '69', 'pellentesque viverra', '1', '2023-10-10');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('22', '96', 'lacus at', '8', '2023-12-29');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('23', '72', 'faucibus orci', '7', '2023-11-05');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('24', '75', 'tortor', '5', '2023-11-02');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('25', '23', 'odio', '1', '2024-05-11');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('26', '115', 'porttitor', '1', '2024-05-24');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('27', '107', 'dui proin', '5', '2023-09-26');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('28', '140', 'ante vivamus', '7', '2024-04-05');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('29', '150', 'quam', '7', '2023-06-10');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('30', '9', 'imperdiet', '1', '2023-06-21');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('31', '181', 'amet sem', '7', '2023-10-27');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('32', '67', 'justo etiam', '6', '2023-12-06');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('33', '44', 'sit amet', '2', '2024-06-01');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('34', '11', 'a', '2', '2023-11-22');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('35', '166', 'sed', '6', '2023-07-31');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('36', '58', 'in felis', '5', '2023-09-27');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('37', '183', 'sapien', '6', '2023-11-15');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('38', '84', 'turpis', '5', '2024-02-03');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('39', '71', 'tristique', '8', '2024-02-01');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('40', '166', 'venenatis non', '3', '2024-04-18');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('41', '162', 'pulvinar sed', '7', '2023-09-17');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('42', '182', 'ligula', '2', '2024-05-12');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('43', '180', 'mattis', '1', '2024-02-02');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('44', '17', 'libero', '8', '2024-04-01');
+INSERT INTO communityEvent (eventID, venueCapacity, name, duration, eventDate) VALUES ('45', '14', 'sed vestibulum', '8', '2024-04-12');
 
 
 INSERT INTO posts (postID, migrantID, postContent, displayName, createdAt) VALUES ('1', '23', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 'nulla', '2023-09-17');

@@ -13,7 +13,7 @@ def get_events():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('select date, eventID, name,duration, venueCapacity from communityEvent')
+    cursor.execute('select eventDate, eventID, name,duration, venueCapacity from communityEvent')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -42,14 +42,14 @@ def add_communityEvent():
     current_app.logger.info(the_data)
 
     #extracting the variable
-    date = the_data['date']
+    eventDate = the_data['eventDate']
     name = the_data['eventName']
     duration = the_data['duration']
     venueCapacity = the_data['venueCapacity']
 
     # Constructing the query
-    query = 'INSERT INTO communityEvent (date, name, duration, venueCapacity) VALUES ('
-    query += "'" + date + "',"
+    query = 'INSERT INTO communityEvent (eventDate, name, duration, venueCapacity) VALUES ('
+    query += "'" + eventDate + "',"
     query += "'" + name + "',"
     query += "'" + str(duration) + "',"
     query += "'" + str(venueCapacity) + "')"
@@ -72,10 +72,10 @@ def update_communityEvent():
     eventID = event_info['eventID']
     duration = event_info['duration']
     name = event_info['eventName']
-    date = event_info['date']
+    eventDate = event_info['eventDate']
     venueCapacity = event_info['venueCapacity']
 
-    query = f"""UPDATE communityEvent SET duration = {duration}, name = '{name}', date = '{date}', venueCapacity = {venueCapacity} WHERE eventID = {eventID}"""
+    query = f"UPDATE communityEvent SET duration = {duration}, name = '{name}', eventDate = '{eventDate}', venueCapacity = {venueCapacity} WHERE eventID = {eventID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -86,7 +86,7 @@ def update_communityEvent():
 def delete_event(eventID):
     current_app.logger.info('DELETE /city_council/communityEvent/<eventID> route')
     
-    query = f"""DELETE FROM communityEvent WHERE eventID = {eventID}"""
+    query = f"DELETE FROM communityEvent WHERE eventID = {eventID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -101,13 +101,14 @@ def delete_event(eventID):
 def get_appointments():
     current_app.logger.info('city_council_routes.py: GET /appointments')
     cursor = db.get_db().cursor()
-    cursor.execute('select volunteerID, date,\
+    cursor.execute('select volunteerID, DATE(appDate) as appDate, \
         appointmentID, subject, weekday from appointments')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
     for row in theData:
         json_data.append(dict(zip(row_headers, row)))
+    current_app.logger.info(f"json data{json_data}")
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
@@ -123,16 +124,17 @@ def add_appointment():
 
     #extracting the variable
     volunteerID = the_data['volunteerID']
-    date = the_data['date']
+    appDate = the_data['appDate']
     subject = the_data['subject']
     weekday = the_data['weekday']
 
     # Constructing the query
-    query = 'INSERT INTO appointments (volunteerID, date, subject, weekday) VALUES ('
-    query += volunteerID + '", "'
-    query += date + '", '
-    query += subject + '", '
-    query += weekday + '", "'
+    #query = 'INSERT INTO appointments (volunteerID, date, subject, weekday) VALUES ('
+    query = f"INSERT INTO appointments (volunteerID, appDate, subject, weekday) VALUES ('{volunteerID}','{appDate}','{subject}','{weekday}')" 
+    #"'" + str(volunteerID) + '", "'
+    #query += "'" + appDate + '", '
+    #query += "'" + subject + '", '
+    #query += "'" + weekday + '")'
     
     current_app.logger.info(query)
 
@@ -151,10 +153,10 @@ def update_appointmentEvent():
     volunteerID = appointment_info['volunteerID']
     weekday = appointment_info['weekday']
     subject = appointment_info['subject']
-    date = appointment_info['date']
+    appDate = appointment_info['appDate']
     appointmentID = appointment_info['appointmentID']
 
-    query = f"""UPDATE appointment SET volunteerID = {volunteerID}, subject = '{subject}', date = '{date}', weekday = {weekday} WHERE appointmentID = {appointmentID}"""
+    query = f"UPDATE appointment SET volunteerID = {volunteerID}, subject = '{subject}', appDate = '{appDate}', weekday = {weekday} WHERE appointmentID = {appointmentID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -165,7 +167,7 @@ def update_appointmentEvent():
 def delete_appointment(appointmentID):
     current_app.logger.info('DELETE /city_council/appointment/<appointmentID> route')
     
-    query = f"""DELETE FROM appointments WHERE appointmentID = {appointmentID}"""
+    query = f"DELETE FROM appointments WHERE appointmentID = {appointmentID}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -193,7 +195,7 @@ def get_demographics(cohortID):
 @city_council.route('/city_council/delete_bulletin/<post_id>', methods=['DELETE'])
 def delete_post(post_id):
     current_app.logger.info('/city_council/delete_bulletin/<post_id> route')
-    query = f"""DELETE FROM posts WHERE postID = {post_id}"""
+    query = f"DELETE FROM posts WHERE postID = {post_id}"
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
