@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS posts
 
 CREATE TABLE IF NOT EXISTS communityEvent
 (
-    date          DATETIME,
+    date          DATE,
     eventID       INT AUTO_INCREMENT,
     name          VARCHAR(255),
     duration      INT,
@@ -639,3 +639,4 @@ INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('5', '4');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('18', '32');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('12', '46');
 INSERT INTO appointmentAttendees (appointmentID, attendeeID) VALUES ('29', '24');
+

@@ -215,3 +215,24 @@ def get_events():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
+
+@migrant.route('/make_appointment', methods=['POST'])
+def add_appointment():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    attendeeID = the_data['attendeeID']
+    appointmentID = the_data['appointmentID']
+
+    # Constructing the query
+    query = f"""insert into appointmentAttendees (attendeeID, appointmentID) values ('{attendeeID}','{appointmentID}')"""
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Appointment Reserved'

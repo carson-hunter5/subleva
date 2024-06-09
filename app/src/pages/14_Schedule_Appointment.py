@@ -10,7 +10,7 @@ st.set_page_config(layout = 'wide')
 
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
-
+migrant_id = st.session_state["id"]
 # Create a new appointment
 
 # add columns to the volunteer table for each day of the week
@@ -26,7 +26,13 @@ if st.button("Pick Weekday"):
        st.dataframe(response)
 
 
-
+appt_id = st.number_input("Input Appointment to Reserve")
+if st.button("Reserve Appointment"):
+       post_data = {
+           "appointmentID" : appt_id,
+           "attendeeID" : migrant_id   
+       }
+       response = requests.post("http://api:4000/m/make_appointment",json=post_data)
 
 """"
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
@@ -46,6 +52,7 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
 
             migrantID = st.session_state.get("id")
 """
+"""
 if st.button("Submit"):
                 if selected_appointment and migrantID:
                     post_data = {
@@ -55,7 +62,7 @@ if st.button("Submit"):
                     }
 
 response = requests.post("http://api:4000/m/migrant/",json=post_data)
-
+"""
 
 if st.button('Back', 
              type='primary',
