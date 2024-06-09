@@ -33,7 +33,7 @@ def get_appointments(attendeeID):
     return jsonify(json_data)
 
 # Get all appointments from the database
-@migrant.route('/migrant/show_appt/<day>', methods=['GET'])
+@migrant.route('/migrant/show_appt/<weekday>', methods=['GET'])
 def get_appt(weekday):
     # get a cursor object from the database
     cursor = db.get_db().cursor()
