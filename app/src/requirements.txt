@@ -1,5 +1,6 @@
 altair
 pandas
+scikit-learn
 streamlit
 streamlit-extras
 world-bank-data
@@ -11,5 +12,5 @@ openai
 validators
 plotly
 seaborn
-scikit-learn
 shap
+requests

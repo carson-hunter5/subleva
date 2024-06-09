@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
 from backend.ml_models.model01 import predict
-
+from backend.ml_models.model02 import train_predict
 
 immigration_official = Blueprint('immigration official', __name__)
 
@@ -180,3 +180,16 @@ def get_countries():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
+
+
+@immigration_official.route('/testing/<year>/<coo>/<coa>/<applicationNum>', methods= ["GET"])
+def get_decisionstats(year,coo,coa,applicationNum):
+    returnArray = train_predict(year, coo, coa, applicationNum)
+    returnval = returnArray[0]
+    return_dict = {'result': returnval}
+    the_response = make_response(jsonify(return_dict))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+    
+    
