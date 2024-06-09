@@ -13,10 +13,9 @@ add_logo("assets/logo.png", height=400)
 st.header('Appointments')
 st.write("Hello! Here is a list of all your appointments scheduled to meet with a representative on behalf of Tanya Bracker.")
 
-id = st.session_state["id"]
-
+attendeeID = st.session_state["id"]
 data = {} 
-data = requests.get(f"""http://api:4000/m/migrant/appointments/{id}""").json()
+data = requests.get(f"""http://api:4000/m/migrant/appointments/{attendeeID}""").json()
 
 edited_data = st.data_editor(
     data,
@@ -24,6 +23,8 @@ edited_data = st.data_editor(
         "date": "Date",
         "appointmentID": "Appointment ID",
         "volunteerID": "Volunteer ID",
+        "subject": "Topic",
+        "weekday": "Day of the Week"
     },
 )
 

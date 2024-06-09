@@ -98,13 +98,13 @@ def delete_event(eventID):
 
 # Appointments
 
-# Get all appointments from the DB
+# Get all appointments 
 @city_council.route('/city_council', methods=['GET'])
 def get_appointments():
     current_app.logger.info('city_council_routes.py: GET /appointments')
     cursor = db.get_db().cursor()
-    cursor.execute('select migrantID, volunteerID, date,\
-        appointmentID from communityEvent')
+    cursor.execute('select volunteerID, date,\
+        appointmentID, subject, weekday from appointment')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -115,6 +115,66 @@ def get_appointments():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Creates a new appointment 
+@city_council.route('/city_council', methods=['POST'])
+def add_appointment():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    volunteerID = the_data['volunteerID']
+    date = the_data['date']
+    appointmentID = the_data['appointmentID']
+    subject = the_data['subject']
+    weekday = the_data['weekday']
+
+    # Constructing the query
+    query = 'insert into appointments (volunteerID, date, appointmentID, subject, weekday) values ("'
+    query += volunteerID + '", "'
+    query += date + '", '
+    query += appointmentID + '", '
+    query += subject + '", '
+    query += weekday + '", "'
+    
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'New Appointment'
+
+# Edit the appointment
+@city_council.route('/city_council', methods=['PUT'])
+def update_appointmentEvent():
+    current_app.logger.info('PUT /city_council route')
+    appointment_info = request.json
+    volunteerID = appointment_info['volunteerID']
+    weekday = appointment_info['weekday']
+    subject = appointment_info['subject']
+    date = appointment_info['date']
+    appointmentID = appointment_info['appointmentID']
+
+    query = f"""UPDATE appointment SET volunteerID = {volunteerID}, subject = '{subject}', date = '{date}', weekday = {weekday} WHERE appointmentID = {appointmentID}"""
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    return 'Appointment updated!'
+
+# Delete the appointment 
+@city_council.route('/city_council/appointment/<appointmentID>', methods=['DELETE'])
+def delete_appointment(appointmentID):
+    current_app.logger.info('DELETE /city_council/appointment/<appointmentID> route')
+    
+    query = f"""DELETE FROM appointment WHERE appointmentID = {appointmentID}"""
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Event cancelled!'
 
 # Demographics
 

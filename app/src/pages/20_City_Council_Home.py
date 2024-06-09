@@ -23,3 +23,8 @@ if st.button('Manage Bulletin Board',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/24_City_Council_Bulletin.py')
+
+if st.button('Manage Appointments', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/27_City_Council_Appointments.py')

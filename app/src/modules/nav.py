@@ -46,6 +46,9 @@ def EventManagementNav():
 def BulletinManagementNav():
     st.sidebar.page_link("pages/24_City_Council_Bulletin.py", label='Manage Bulletin Board', icon='🔖')
 
+def AppointmentManagementNav():
+    st.sidebar.page_link("pages/27_City_Council_Appointments.py", label="Manage Appointments", icon='💻')
+
 # --------------------------------Links Function -----------------------------------------------
 # Define the sidebar links function
 def SideBarLinks(show_home=False):
@@ -76,20 +79,20 @@ def SideBarLinks(show_home=False):
             AsylumStatisticsNav()
             PopulationNav()
 
-        # If the user role is migrant, show the [insert pages here] 
+        # If the user role is migrant
         elif st.session_state['role'] == 'migrant':
             MigrantHomeNav()
             AppointmentsNav()
             BulletinBoardNav()
             CommunityEventsNav()
            
-        # If the user is an city council member, show them [insert pages here] 
+        # If the user is an city council member 
         elif st.session_state['role'] == 'city_council':
             CityCouncilHomeNav()
             EventManagementNav()
             BulletinManagementNav()
+            AppointmentManagementNav
             
-
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
 
