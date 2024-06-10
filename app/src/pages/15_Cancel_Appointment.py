@@ -15,6 +15,8 @@ SideBarLinks()
 st.subheader("Cancel an Appointment", divider='green')
 
 attendeeID = st.session_state["id"]
+
+data = {} 
 data = requests.get(f"""http://api:4000/m/migrant/appointments_cancel/{attendeeID}""").json()
 logger.info(f'Data is: {data}')
 for row in data:
@@ -26,7 +28,9 @@ edited_data = st.data_editor(
     column_config={
         "appDate": "Date",
         "appointmentID": "Appointment ID",
-        "name": "Volunteer Name",
+        "volunteerID": "Volunteer ID",
+        "subject" : "Topic",
+        "weekday" : "Weekday"
     },
 )
 

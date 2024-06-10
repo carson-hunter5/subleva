@@ -22,16 +22,17 @@ except:
 
 st.dataframe(data)
 
-st.subheader("**Global Population Statsitics**", divider='green')
+st.header("**Global Population Statsitics**", divider='green')
 
 col1, col2 = st.columns(2)
+with col1:
+ st.write("**Population Factor**")
 col1.metric("Birth Rates", "18.1 Births", "-0.94%")
 col1.metric("Death Rates", "7.75 Deaths", "5.8%")
 col1.metric("Year to Date Population", "8.1 Billion", "0.8%")
 
 with col2: 
-  st.write("India")
-  st.write("China")
-  st.write("United States of America")
-  st.write("India")
-  st.write("India")
+  st.write("**Country Population**")
+  col2.metric("India", "1.428 Billion", "0.81%")
+  col2.metric("China", "1.425 Billion", "-0.02%")
+  col2.metric("United States of America", "339 Million", "0.50%")
