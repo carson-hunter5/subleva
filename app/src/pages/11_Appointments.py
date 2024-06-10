@@ -14,14 +14,16 @@ add_logo("assets/logo.png", height=400)
 # set the header of the page
 st.header('Appointments', divider='green')
 st.write("Hello! Here is a list of all your appointments scheduled to meet with a representative on behalf of Tanya Bracker.")
-
 attendeeID = st.session_state["id"]
+
+# data from the appointments for a specifc attendee from the users table
 data = {} 
 data = requests.get(f"""http://api:4000/m/migrant/appointments/{attendeeID}""").json()
 logger.info(f'Data is: {data}')
 for row in data:
   row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
 
+# fixing the column names
 logger.info(type(data))
 edited_data = st.data_editor(
     data,

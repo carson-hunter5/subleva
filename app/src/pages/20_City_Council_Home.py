@@ -14,6 +14,7 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 
 col1, col2 = st.columns(2)
 
+# column that divides up the tasks which lead to the correpsoning pages for a city council woman
 with col1:
  st.subheader("Navigation", divider="green")
  if st.button('Manage Community Events', 
@@ -32,6 +33,8 @@ with col1:
   st.switch_page('pages/27_City_Council_Appointments.py')
 
  st.subheader("Upcoming Events", divider="green")
+
+ #gets all the events from the database
  data = {} 
  data = requests.get('http://api:4000/c/city_council/database').json()
  logger.info(f'Data is: {data}')
@@ -39,6 +42,8 @@ with col1:
   row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
 
  logger.info(type(data))
+
+ #edits the column name
  edited_data = st.data_editor(
     data,
     column_config={
@@ -47,6 +52,7 @@ with col1:
     },
 )
 
+# general dashboard aestethics 
 with col2:
  st.image("https://i.imgur.com/TbrU8c8.jpeg")
 

@@ -14,6 +14,7 @@ SideBarLinks()
 #Cancel appointment
 st.header("Cancel Appointment", divider='green')
 
+#gets all the appointments
 data = {} 
 data = requests.get('http://api:4000/c/city_council/appointments').json()
 logger.info(f'Data is: {data}')
@@ -21,6 +22,8 @@ for row in data:
   row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
 
 logger.info(type(data))
+
+#edits the column name
 edited_data = st.data_editor(
     data,
     column_config={
@@ -36,13 +39,16 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     appointment_ids = [item['appointmentID'] for item in data if 'appointmentID' in item]
 
     if appointment_ids:
-        id_to_delete = st.selectbox("Select the Appointment ID", options=appointment_ids)
+        id_to_delete = st.selectbox("Select the Appointment ID",opitions = list(appointment_ids).sort())
 
+#deletes the appointment of the id that is selected 
 if st.button('Delete Appointment'):
     if id_to_delete:
      edited_event_data = {
         "appointmentID" : str(id_to_delete)
     }
+     
+     #route to delete an appointment
     response = requests.delete(f'http://api:4000/c/city_council/appointments/{id_to_delete}')
     data = [item for item in data if item['appointmentID'] != id_to_delete]
     if response.status_code == 200:

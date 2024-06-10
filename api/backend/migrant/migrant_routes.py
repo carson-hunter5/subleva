@@ -5,8 +5,6 @@ from backend.db_connection import db
 migrant = Blueprint('migrant', __name__)
 app = Flask(__name__)
 
-# Appointment 
-
 # Get all appointments from the database for a specifc migrant
 @migrant.route('/migrant/appointments/<id>', methods=['GET'])
 def get_migrant_appointment(id): 
@@ -33,7 +31,7 @@ def get_migrant_appointment(id):
 
      return jsonify(json_data)
 
-# Get all appointments from the database
+# Get all appointments from the database based on the weekday
 @migrant.route('/migrant/show_appt/<weekday>', methods=['GET'])
 def get_appt(weekday):
     # get a cursor object from the database
@@ -128,7 +126,6 @@ def delete_migrant_appointment(migrantID, apptID):
         current_app.logger.error(f"Error deleting appointment: {e}")
         return jsonify({'error': 'Failed to delete appointment', 'details': str(e)}), 500
 
-#Posts
 
 # Get all posts from the database for a specific migrant
 @migrant.route('/migrant/posts', methods=['GET'])
@@ -138,7 +135,7 @@ def get_posts():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt DESC LIMIT 7')
+    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt DESC LIMIT 10')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -214,8 +211,6 @@ def delete_migrant_post(postID):
     db.get_db().commit()
     
     return 'Post deleted!'
-
-# Community Events
 
 # Get all community events from the DB 
 @migrant.route('/migrant/events', methods=['GET'])

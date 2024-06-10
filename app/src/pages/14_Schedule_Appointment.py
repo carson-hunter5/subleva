@@ -17,10 +17,12 @@ st.subheader("**Schedule a New Appointment**", divider='green')
 
 weekday = st.selectbox(label="Select an Appointment Day", options=("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
 
+# initializing the list of data
 appointment_ids = []
 data = {}
 appointment_to_book = None
 
+# getting all the appointments for a certain migrant based on what day they want
 response = requests.get(f'http://api:4000/m/migrant/show_appt/{weekday}')
 logger.info(f'Response status code: {response.status_code}')
     
@@ -32,6 +34,8 @@ if response.status_code == 200:
         row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
     appointment_ids = [row["appointmentID"] for row in data]
     logger.info(type(data))
+
+    # editing the column names
     edited_data = st.data_editor(
         data,
         column_config={
@@ -54,11 +58,12 @@ logger.info(f'appointment_to_book = {appointment_to_book}')
 headers = {'Content-Type': 'application/json'}
 
 if st.button("Reserve Appointment"):
-    # if appointment_to_book and migrant_id:
         post_data = {
             "appointmentID": appointment_to_book,
             "attendeeID": migrant_id   
         }
+
+        #takes the inputed appointment and adds the data to the migrant to show up in their table of appointments
         response = requests.post("http://api:4000/m/make_appointment", json=post_data)
         if response.status_code == 200:
             st.session_state["message"] = ":green[Appointment Booked!]"

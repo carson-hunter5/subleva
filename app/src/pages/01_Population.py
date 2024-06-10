@@ -9,11 +9,9 @@ st.set_page_config (page_title="Population Data", page_icon="🗺️")
 
 SideBarLinks()
 
-st.subheader("**Population Data**", divider='green')
+st.header("**Population Data**", divider='green')
 
-#Get the country data
-st.write("Current Migrant Population")
-
+# Getting the data from the population
 try:
   data = requests.get('http://api:4000/i/get_population').json()
 except:
@@ -24,6 +22,7 @@ st.dataframe(data)
 
 st.header("**Global Population Statsitics**", divider='green')
 
+# Columns displaying some historical data (not from the data just to serve as an aesthetic purpose)
 col1, col2 = st.columns(2)
 with col1:
  st.write("**Population Factor**")

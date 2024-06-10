@@ -14,6 +14,8 @@ SideBarLinks()
 
 st.header("Cancel Event", divider='green')
 
+
+# gets a list of all the community events
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
 logger.info(f'Data is: {data}')
@@ -21,6 +23,8 @@ for row in data:
   row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
 
 logger.info(type(data))
+
+#edits the column name
 edited_data = st.data_editor(
     data,
     column_config={
@@ -35,14 +39,17 @@ edited_data = st.data_editor(
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     event_ids = [item['eventID'] for item in data if 'eventID' in item]
 
+#dropdown that includes the list of ids of the events
     if event_ids:
         id_to_delete = st.selectbox("Select the Event ID", options=event_ids)
 
+# deletes the event based on the event id
 if st.button('Delete Event'):
     if id_to_delete:
      edited_event_data = {
         "eventID" : str(id_to_delete)
     }
+     #route that deletes the event based on the event id selected
     response = requests.delete(f'http://api:4000/c/city_council/communityEvent/{id_to_delete}')
     data = [item for item in data if item['eventID'] != id_to_delete] 
     if response.status_code == 200:

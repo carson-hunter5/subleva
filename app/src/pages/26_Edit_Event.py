@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
 import datetime
-import requests
+import logging
 from modules.nav import SideBarLinks
+logger = logging.getLogger(__name__)
 
 st.set_page_config (page_title="Community Event Manager", page_icon="💻")
 
@@ -10,21 +11,40 @@ SideBarLinks()
 
 st.header("Edit Community Event", divider='green')
 
+#gets all the community events
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
+logger.info(f'Data is: {data}')
+for row in data:
+  row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
+
+logger.info(type(data))
+
+#edit the column names
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "eventDate": "Date",
+        "eventID": "EventID",
+        "name": "Name",
+        "duration" : "Duration in Hours",
+        "venueCapacity" : "Venue Capacity"
+    },
+)
 
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     event_ids = [item['eventID'] for item in data if 'eventID' in item]
-
+    # gets the event id from the list of ids from the dropdown
     if event_ids:
         id_to_edit = st.selectbox("Select the Event ID", options=event_ids)
 
+# inputs for the user to change any of the event properties
 edit_event_name = st.text_input("New Event Name")
 edit_duration = st.number_input("New Duration",value=0, step=1, placeholder="Type a value...")
 edit_venue_capacity = st.number_input("New Venue Capcity",value=0, step=1, placeholder="Type a value...")
 edit_event_date = st.date_input("New Event Date", value=datetime.date.today())
 
-
+# updates the old information to the inputted values from the user
 if st.button("Change Event Info"):
  if edit_event_name and edit_event_date and edit_duration and edit_venue_capacity:
      edited_event_data = {
@@ -35,6 +55,7 @@ if st.button("Change Event Info"):
            "eventID" : str(id_to_edit)
        }
      
+     #call that adds the new event data into the community table again 
      response = requests.put("http://api:4000/c/city_council/communityEvent", json=edited_event_data)
      try:
          response_json = response.json()

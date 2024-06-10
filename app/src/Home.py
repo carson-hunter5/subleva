@@ -16,6 +16,7 @@ st.title('Subleva')
 st.write('\n\n')
 st.write('### Welcome to Subleva! Please log in. ')
 
+# button ton act as immigration officer
 if st.button("Act as Jackson Davies, a Senior Immigration Official", 
             type = 'primary', 
             use_container_width=True):
@@ -25,6 +26,7 @@ if st.button("Act as Jackson Davies, a Senior Immigration Official",
     st.session_state['last_name'] = 'Davies'
     st.switch_page('pages/00_Immigration_Official.py') 
 
+# button to act as a migrant
 if st.button('Act as Hugo Diallo, a Migrant', 
             type = 'primary', 
             use_container_width=True):
@@ -36,7 +38,8 @@ if st.button('Act as Hugo Diallo, a Migrant',
     st.session_state["id"] = 1
     st.switch_page('pages/10_Migrant_Home.py')
 
-if st.button('Act as Tanya Bracker, the Head of Refugee Affairs for her city council', 
+# button ton act as city council woman
+if st.button('Act as Tanya Bracker, a City Councilwoman', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True

@@ -9,12 +9,14 @@ add_logo("assets/logo.png", height=400)
 
 st.header("Recent Bulletin Posts", divider='green')
 
+# getting all the posts 
 data = {} 
 try:
   data = requests.get('http://api:4000/m/migrant/posts').json()
 except:
   st.write("**Important**: Could not connect to database")
 
+# edits the column names
 edited_data = st.data_editor(
     data,
     column_config={
@@ -26,6 +28,7 @@ edited_data = st.data_editor(
 
 col1, col2 = st.columns(2, gap = "medium")
 
+# allows the user to make a post onto the bulletin board and it displays
 with col1:
  st.header("**Create a Post**", divider='green')
  migrantID = st.session_state["id"]
@@ -49,6 +52,7 @@ with col1:
          st.write(st.session_state["message"])
     del st.session_state["message"]
 
+# general aesthetic information
 with col2:
    st.header("Trending Post", divider = 'green')
    st.image("https://i.imgur.com/Hcmqbu2.jpeg")

@@ -30,6 +30,7 @@ edited_data = st.data_editor(
     },
 )
 
+#gets all the appointments
 data = {} 
 data = requests.get('http://api:4000/c/city_council/appointments').json()
 logger.info(f'Data is: {data}')
@@ -40,7 +41,7 @@ logger.info(type(data))
 
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
   appointment_ids = [item['appointmentID'] for item in data if 'appointmentID' in item]
-
+# dropdown that includes the list of appointment ids 
   if appointment_ids:
     id_to_edit = st.selectbox("Select the Appointment ID", options=appointment_ids)
 
@@ -50,12 +51,15 @@ volunteer_data = requests.get("http://api:4000/c/city_council/volunteers").json(
 
 volunteer_dict = pd.DataFrame(volunteer_data)
 edit_volunteer_id = st.selectbox("Edited Volunteer ID", options = volunteer_dict["id"])
+#allows the user to change any appointment based on the id that is selected
+
 edit_appointment_appDate = st.date_input("Edited Appointment Date", value=datetime.date.today())
 edit_subject = st.selectbox("Appointment Topic",("Training", "Marketing", "Accounting", "Services", "Sales", 
      "Engineering", "Legal", "Support", "Human Resources", 
      "Business Development","Product Management", "Reseearch and Development"))
 edit_weekday = st.selectbox("Weekday", ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
 
+#updates the selected appointment to the new inputs from the user
 if st.button("Change Appointment Info"):
   if edit_volunteer_id and edit_appointment_appDate and edit_subject and edit_weekday:
     edited_appointment_data = {
@@ -65,6 +69,8 @@ if st.button("Change Appointment Info"):
           "subject" : str(edit_subject),
           "weekday" : str(edit_weekday)
       }
+    
+    #call to update the appointment table to the new information inputted by the user
     response = requests.put("http://api:4000/c/city_council/appointments", json=edited_appointment_data)
     if response.status_code == 200:
           st.session_state["message"] = ":green[Appointment Edited Successfully!]"

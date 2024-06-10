@@ -16,6 +16,7 @@ st.subheader("Cancel an Appointment", divider='green')
 
 attendeeID = st.session_state["id"]
 
+#gets all the appointments from a certain migrant based on their id from the table of appointmnet attendees 
 data = {} 
 data = requests.get(f"""http://api:4000/m/migrant/appointments_cancel/{attendeeID}""").json()
 logger.info(f'Data is: {data}')
@@ -23,6 +24,8 @@ for row in data:
   row["Date"] = ' '.join(row["Date"].split(' ')[:4])
 
 logger.info(type(data))
+
+#edits the column name
 edited_data = st.data_editor(
     data,
     column_config={
@@ -42,6 +45,7 @@ if data:
     appointment_ids = [row["appointmentID"] for row in data]
     appointment_to_delete = st.selectbox("Select an Appointment ID to Delete:", options=appointment_ids)
 
+#cancels the appointment by  removes the appointment id from the attendees' table 
 if st.button("Cancel Appointment"):
       response = requests.delete(f"http://api:4000/m/migrant/appointment_delete/{attendeeID}/{appointment_to_delete}")
       if response.status_code == 200:

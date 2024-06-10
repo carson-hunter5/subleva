@@ -19,6 +19,7 @@ eventDate = st.date_input("Event Date", value=datetime.date.today())
 duration = st.number_input("Duration",value=0, step=1, placeholder="Type a value...")
 venue_capacity = st.number_input("Venue Capcity",value=0, step=1, placeholder="Type a value...")
 
+#submits the event info
 if st.button("Submit"):
     if event_name and eventDate and duration and venue_capacity:
         post_data = {
@@ -27,6 +28,7 @@ if st.button("Submit"):
             "duration" : duration,
             "venueCapacity" : venue_capacity
         }
+        #call that adds the event to the list of events
         response = requests.post("http://api:4000/c/council_add_event", json=post_data)
         if response.status_code == 200:
                 st.session_state["message"] = ":green[Event Created Sucessfully!]"

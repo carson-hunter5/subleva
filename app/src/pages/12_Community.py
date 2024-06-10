@@ -13,12 +13,14 @@ add_logo("assets/logo.png", height=400)
 
 st.header("Community Events Near You", divider='green')
 
+# getting the list of events 
 data = {} 
 data = requests.get('http://api:4000/m/migrant/events').json()
 logger.info(f'Data is: {data}')
 for row in data:
   row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
 
+# editing the column names via the editor
 logger.info(type(data))
 edited_data = st.data_editor(
     data,
@@ -29,6 +31,7 @@ edited_data = st.data_editor(
     },
 )
 
+# General dashboard aesthetics with a photo gallery
 st.header("Photo Gallery", divider='green')
 
 col1, col2 = st.columns(2)

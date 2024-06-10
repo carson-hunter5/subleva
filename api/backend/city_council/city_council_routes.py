@@ -6,7 +6,7 @@ city_council = Blueprint('city_council', __name__)
 
 # Community Events
 
-# Get all community events from the DB
+# Get all community events
 @city_council.route('/city_council', methods=['GET'])
 def get_events():
     # get a cursor object from the database
@@ -32,7 +32,7 @@ def get_events():
 
     return jsonify(json_data)
 
-# Get all community events from the DB
+# Get all community events 
 @city_council.route('/city_council/database', methods=['GET'])
 def get_certainEvents():
     # get a cursor object from the database
@@ -57,7 +57,6 @@ def get_certainEvents():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
-
 
 # Creates a new community event
 @city_council.route('/council_add_event', methods=['POST'])
@@ -89,7 +88,6 @@ def add_communityEvent():
     
     return 'New Event'
 
-
 # Edit the event 
 @city_council.route('/city_council/communityEvent', methods=['PUT'])
 def update_communityEvent():
@@ -119,9 +117,6 @@ def delete_event(eventID):
     
     return 'Event cancelled!'
 
-
-# Appointments
-
 # Get all appointments 
 @city_council.route('/city_council/appointments', methods=['GET'])
 def get_appointments():
@@ -139,8 +134,6 @@ def get_appointments():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-
-
 
 # Creates a new appointment 
 @city_council.route('/council/add_appointments', methods=['POST'])
@@ -196,24 +189,7 @@ def delete_appointment(appointmentID):
     
     return 'Appointment cancelled!'
 
-# Demographics
-
-# Get the demographics for a certain cohort of refugees
-@city_council.route('/city_council/<cohortID>', methods=['GET'])
-def get_demographics(cohortID):
-    current_app.logger.info('GET /city_council/<cohortID> route')
-    cursor = db.get_db().cursor()
-    cursor.execute('select cohortID from refugeeCohort where cohortID = {0}'.format(cohortID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
+#deletes the post
 @city_council.route('/city_council/delete_bulletin/<post_id>', methods=['DELETE'])
 def delete_post(post_id):
     current_app.logger.info('/city_council/delete_bulletin/<post_id> route')
@@ -224,6 +200,7 @@ def delete_post(post_id):
     
     return 'Event cancelled!'
 
+# gets the posts
 @city_council.route('/city_council/bulletin', methods=['GET'])
 def get_posts():
     # get a cursor object from the database

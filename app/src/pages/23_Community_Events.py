@@ -15,6 +15,7 @@ SideBarLinks()
 
 st.header("All Community Events", divider='green')
 
+#gets all community events
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
 logger.info(f'Data is: {data}')
@@ -22,6 +23,8 @@ for row in data:
   row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
 
 logger.info(type(data))
+
+#edits the column name
 edited_data = st.data_editor(
     data,
     column_config={
@@ -32,6 +35,7 @@ edited_data = st.data_editor(
         "venueCapacity":"Venue Capacity"
     },
 )
+
 col1, col2, col3 = st.columns(3, gap = "medium")
 
 

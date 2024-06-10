@@ -13,13 +13,14 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 
 col1, col2 = st.columns(2)
 
+# Dashboard Information
 with col1:
  st.image("https://i.imgur.com/5wysIa3.jpeg")
  st.write("**Full Name**: Hugo Ignacio Davilia")
  st.write("**Age**: 23 years old")
  st.write("**Current Occupation**: IT Technician @ UnitedHealth Care")
 
-
+# Dashboard Information with page links to other things the migrant can do
 with col2:
   st.subheader("Navigation", divider="green")
   if st.button('Appointment Book', 

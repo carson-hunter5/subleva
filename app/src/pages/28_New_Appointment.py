@@ -15,9 +15,12 @@ SideBarLinks()
 
 st.header("New Appoinment", divider='green')
 
+#gets a list of all the volunteers and displays the info
 volunteer_data = {}
 volunteer_data = requests.get("http://api:4000/c/city_council/volunteers").json()
 logging.info(volunteer_data)
+
+#edit the column names
 edited_data = st.data_editor(
     volunteer_data,
     column_config={
@@ -33,7 +36,6 @@ appDate = st.date_input("Event Date", value=datetime.date.today())
 subject = st.selectbox("Appointment Topic",("Training", "Marketing", "Accounting", "Services", "Sales", 
      "Engineering", "Legal", "Support", "Human Resources", 
      "Business Development","Product Management", "Reseearch and Development"))
-# weekday = st.selectbox("Weekday", ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
 
 if st.button("Submit"):
     if volunteerID and appDate and subject:
@@ -43,6 +45,8 @@ if st.button("Submit"):
             "subject" : subject,
             "weekday" : appDate.strftime('%A')
         }
+
+        #route to add the appointment to the list of appointments
         response = requests.post("http://api:4000/c/council/add_appointments", json=post_data)
         if response.status_code == 200:
                 st.session_state["message"] = ":green[Appointment Created Sucessfully!]"
