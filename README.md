@@ -12,9 +12,6 @@ Currently, there are three major components:
 ## About
 Subleva aims to mitigate this contention by providing a quantitative approach to understanding migration from both perspectives and offers resources for migrants.
 
-## How to Set Up and Run
-To use Subleva, select the user persona that you would like to act as, and use the side bar links to navigate to and from pages. Once you are done with the user persona, please select the Log Out button at the bottom left of the side bar. 
-
 ## Deployment
 
 To deploy this project run

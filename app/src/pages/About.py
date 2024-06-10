@@ -25,10 +25,10 @@ st.markdown(
 
     Created By:
 
-    Carson Hunter
+    Carson Hunter    
 
-    Ivionna Jordan
-
+    Ivionna Jordan 
+             
     Dylan Sacks
     """
 )
