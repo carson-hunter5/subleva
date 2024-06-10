@@ -1,15 +1,14 @@
 import logging
-logger = logging.getLogger()
-
-import pandas as pd
 import requests
+import pandas as pd 
 import streamlit as st
-import numpy as np
 from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.set_page_config (page_title="Asylum Applications", page_icon="🗂️")
+#st.set_page_config (page_title="Asylum Applications", page_icon="🗂️")
+
+logger = logging.getLogger()
 
 st.header("**Predict Asylum Applications**", divider='green')
 
@@ -24,9 +23,8 @@ age_group = st.radio("Select an Age Group 👇",age_options)
 age_index = age_options.index(age_group)
 age_array = np.zeros(5, dtype=int)
 age_array[age_index] = 1
+
 if st.button("Submit"):
     response = requests.get(f"""http://api:4000/i/prediction/{year}/{country_name}/{gender}/{age_array}""")
     prediction = response.json()['result']
     st.write(f"The predicted number of applications from {country_name} is {prediction}.")
-
-

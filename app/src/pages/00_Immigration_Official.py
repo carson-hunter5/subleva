@@ -19,7 +19,7 @@ with col1:
 
  st.write('')
 
- st.subheader("Your Tasks", divider="green")
+ st.subheader("Navigation", divider="green")
  if st.button('View Population Data', 
              type='primary',
              use_container_width=True):
@@ -30,10 +30,10 @@ with col1:
              use_container_width=True):
   st.switch_page('pages/02_Asylum_Application.py')
 
- if st.button('View Asylum Applications Statistics', 
+ if st.button('View Global Asylum Acceptance ', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/03_Asylum_Statistics.py')
+  st.switch_page('pages/03_Application_Predictions.py')
 
 with col2:
   st.subheader("Urgent Responses", divider="green")
@@ -43,10 +43,23 @@ with col2:
         index= None,
   )
 
+  companyQuestion2 = st.radio(
+        "Have you completed the new AI literacy training yet?",
+        ["Yes", " No"],
+        index= None,
+  )
+
   opinion = st.select_slider(
     "How satsfied were you with last Tuesday **June 4th's** guest lecture?",
     options=["Highly Dissatsfied", "Dissatsfied", "Average", "Sastfied", "Highly Satsfied"],
     )
+  st.write("")
   st.write("You voted:", opinion)
 
-  st.image("https://i.imgur.com/FDCOhVv.png")
+  st.subheader("To-Do", divider="green")
+  task1 = st.checkbox("Process Asylum Applications")
+  task2 = st.checkbox("Manage Immigration Detention from Serbia")
+  task3 = st.checkbox("Review Immigration Forms")
+  task4 = st.checkbox("Attend Company Training on Tuesday, June 11th")
+
+  
