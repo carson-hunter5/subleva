@@ -76,12 +76,12 @@ def add_appointment():
         appointmentID = the_data['appointmentID']
 
         # Constructing the query using parameterized queries to prevent SQL injection
-        query = """INSERT INTO appointmentAttendees (attendeeID, appointmentID) VALUES (%s, %s)"""
+        query = f"""INSERT INTO appointmentAttendees (attendeeID, appointmentID) VALUES ('{attendeeID}','{appointmentID}')"""
         current_app.logger.info(query)
 
         # Executing and committing the insert statement
         cursor = db.get_db().cursor()
-        cursor.execute(query, (attendeeID, appointmentID))
+        cursor.execute(query)
         db.get_db().commit()
 
         return jsonify({'message': 'Appointment added successfully'}), 200

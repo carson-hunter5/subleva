@@ -3,7 +3,9 @@ import requests
 import datetime
 import requests
 from streamlit_extras.app_logo import add_logo
+import logging
 from modules.nav import SideBarLinks
+import pandas as pd
 
 st.set_page_config (page_title="Appointment Manager", page_icon="📅")
 
@@ -13,21 +15,33 @@ SideBarLinks()
 
 st.header("New Appoinment", divider='green')
 
+volunteer_data = {}
+volunteer_data = requests.get("http://api:4000/c/city_council/volunteers").json()
+logging.info(volunteer_data)
+edited_data = st.data_editor(
+    volunteer_data,
+    column_config={
+        "name": "Volunteer Name",
+        "id": "Volunteer ID",
+    },
+)
+volunteer_dict = pd.DataFrame(volunteer_data)
+
 # Creates an Appointment
-volunteerID = st.number_input("Volunteer ID", value=0, step=1)
+volunteerID = st.selectbox("Select a Volunteer ID", options = volunteer_dict["id"])
 appDate = st.date_input("Event Date", value=datetime.date.today())
 subject = st.selectbox("Appointment Topic",("Training", "Marketing", "Accounting", "Services", "Sales", 
      "Engineering", "Legal", "Support", "Human Resources", 
      "Business Development","Product Management", "Reseearch and Development"))
-weekday = st.selectbox("Weekday", ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
+# weekday = st.selectbox("Weekday", ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
 
 if st.button("Submit"):
-    if volunteerID and appDate and subject and weekday:
+    if volunteerID and appDate and subject:
         post_data = {
             "volunteerID" : volunteerID,
             "appDate" : str(appDate),
             "subject" : subject,
-            "weekday" : weekday
+            "weekday" : appDate.strftime('%A')
         }
         response = requests.post("http://api:4000/c/council/add_appointments", json=post_data)
         if response.status_code == 200:
