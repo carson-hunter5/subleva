@@ -19,8 +19,8 @@ def PopulationNav():
 def AsylumApplicationNav():
     st.sidebar.page_link("pages/02_Asylum_Application.py", label="Asylum Prediction Model", icon='🗂️')
 
-def AsylumStatisticsNav():
-    st.sidebar.page_link("pages/03_Asylum_Statistics.py", label="Asylum Statistics", icon='📊')
+def AppAcceptancesNav():
+    st.sidebar.page_link("pages/03_Application_Predictions.py", label="Application Acceptance Preditions", icon='📊')
 
 ## ------------------------ Examples for Role of Migrant ------------------------
 def MigrantHomeNav():
@@ -76,7 +76,7 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'immigration_officer':
             ImmigrationHomeNav()
             AsylumApplicationNav()
-            AsylumStatisticsNav()
+            AppAcceptancesNav()
             PopulationNav()
 
         # If the user role is migrant

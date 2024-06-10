@@ -3,11 +3,12 @@ logger = logging.getLogger()
 
 import streamlit as st
 from modules.nav import SideBarLinks
-import logging 
 import requests
 import pandas as pd
-import streamlit as st
-st.set_page_config (page_title="Asylum Statistics", page_icon="📊")
+
+st.set_page_config (page_title= "Application Predictions", page_icon="📊")
+
+st.header("**Asylum Acceptances Applications**", divider='green')
 
 SideBarLinks()
 
