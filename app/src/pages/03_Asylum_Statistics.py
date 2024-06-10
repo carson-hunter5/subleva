@@ -25,3 +25,8 @@ if st.button("Submit"):
     st.write(f"The predicted acceptance rate is {prediction_percentage}%.")
 
 
+
+if st.button('Back', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/00_Immigration_Official.py')
