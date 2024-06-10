@@ -4,12 +4,31 @@ import requests
 logger = logging.getLogger()
 import streamlit as st
 from modules.nav import SideBarLinks
-
+import pandas as pd
 st.set_page_config (page_title="Appointment Manager", page_icon="📅")
 
 SideBarLinks()
 
 st.header("Edit Appointment", divider='green')
+
+
+data = {} 
+data = requests.get('http://api:4000/c/city_council/appointments').json()
+logger.info(f'Data is: {data}')
+for row in data:
+  row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
+
+logger.info(type(data))
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "volunteerID": "Volunteer ID",
+        "appDate": "Date",
+        "appointmentID": "Appointment ID",
+        "subject" : "Appointment Topic",
+        "weekday" : "Day of the Week",
+    },
+)
 
 data = {} 
 data = requests.get('http://api:4000/c/city_council/appointments').json()
@@ -25,7 +44,12 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
   if appointment_ids:
     id_to_edit = st.selectbox("Select the Appointment ID", options=appointment_ids)
 
-edit_volunteer_id = st.number_input("Edited Volunteer ID",value=0, step=1)
+
+volunteer_data = {}
+volunteer_data = requests.get("http://api:4000/c/city_council/volunteers").json()
+
+volunteer_dict = pd.DataFrame(volunteer_data)
+edit_volunteer_id = st.selectbox("Edited Volunteer ID", options = volunteer_dict["id"])
 edit_appointment_appDate = st.date_input("Edited Appointment Date", value=datetime.date.today())
 edit_subject = st.selectbox("Appointment Topic",("Training", "Marketing", "Accounting", "Services", "Sales", 
      "Engineering", "Legal", "Support", "Human Resources", 
