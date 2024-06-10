@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
-import requests
+import logging
 from streamlit_extras.app_logo import add_logo 
 from modules.nav import SideBarLinks
+logger = logging.getLogger(__name__)
 
 st.set_page_config (page_title="Appointment Manager", page_icon="📅")
 
@@ -15,6 +16,21 @@ st.header("Cancel Appointment", divider='green')
 
 data = {} 
 data = requests.get('http://api:4000/c/city_council/appointments').json()
+logger.info(f'Data is: {data}')
+for row in data:
+  row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
+
+logger.info(type(data))
+edited_data = st.data_editor(
+    data,
+    column_config={
+        "appDate": "Date",
+        "appointmentID": "Appointment ID",
+        "volunteerID": "Volunteer ID",
+        "subject" : "Topic",
+        "weekday" : "Weekday"
+    },
+)
 
 if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     appointment_ids = [item['appointmentID'] for item in data if 'appointmentID' in item]

@@ -47,11 +47,6 @@ if edited_data:
     appointment_ids = [row["appointmentID"] for row in data]
     appointment_to_book = st.selectbox("Select an Appointment ID to Book:", options=appointment_ids)
 
-# Use edited_data variable outside the block
-#if isinstance(edited_data, pd.DataFrame) and not edited_data.empty:
-    #appointment_ids = edited_data['appointmentID'].tolist()
-    #appointment_to_book = st.selectbox("Select an Appointment ID to Schedule", options=appointment_ids)
-
 headers = {'Content-Type': 'application/json'}
 
 # 
