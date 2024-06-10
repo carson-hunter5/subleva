@@ -39,7 +39,7 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
     appointment_ids = [item['appointmentID'] for item in data if 'appointmentID' in item]
 
     if appointment_ids:
-        id_to_delete = st.selectbox("Select the Appointment ID",opitions = list(appointment_ids).sort())
+        id_to_delete = st.selectbox("Select the Appointment ID",options = appointment_ids)
 
 #deletes the appointment of the id that is selected 
 if st.button('Delete Appointment'):
