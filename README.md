@@ -1,4 +1,4 @@
-# Subleva Project Repo for DoC 2024 
+# Subleva Project Repo
 
 # Project Overview
 
