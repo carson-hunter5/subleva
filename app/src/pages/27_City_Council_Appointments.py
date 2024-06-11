@@ -1,14 +1,12 @@
 import streamlit as st
 import requests
-from streamlit_extras.app_logo import add_logo
 import logging 
-from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
-st.set_page_config (page_title="Appointment Manager", page_icon="📅")
+from modules.nav import SideBarLinks
 
-# Show appropriate sidebar links for the role of the currently logged in user
+st.set_page_config (page_title="Appointment Manager", page_icon="📅")
 SideBarLinks()
 
 st.header("All Appointments", divider='green')
@@ -19,10 +17,9 @@ data = requests.get('http://api:4000/c/city_council/appointments').json()
 logger.info(f'Data is: {data}')
 for row in data:
   row["appDate"] = ' '.join(row["appDate"].split(' ')[:4])
-
 logger.info(type(data))
 
-#edits the column data
+#edits the data layout and format
 edited_data = st.data_editor(
     data,
     column_config={
@@ -30,8 +27,10 @@ edited_data = st.data_editor(
         "appDate": "Date",
         "appointmentID": "Appointment ID",
         "subject" : "Appointment Topic",
-        "weekday" : "Day of the Week",
+        "weekday" : "Day",
     },
+    use_container_width= True,
+    column_order=("appointmentID","appDate","weekday", "subject", "volunteerID")
 )
 
 # makes a new appointment

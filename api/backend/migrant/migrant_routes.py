@@ -127,7 +127,7 @@ def delete_migrant_appointment(migrantID, apptID):
         return jsonify({'error': 'Failed to delete appointment', 'details': str(e)}), 500
 
 
-# Get all posts from the database for a specific migrant
+# Get all posts from the database
 @migrant.route('/migrant/posts', methods=['GET'])
 def get_posts():
 
@@ -135,7 +135,7 @@ def get_posts():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt DESC LIMIT 10')
+    cursor.execute('SELECT postContent, displayName, createdAt FROM posts ORDER BY createdAt DESC')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]

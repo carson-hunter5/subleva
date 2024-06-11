@@ -1,43 +1,43 @@
 import streamlit as st
 import requests
 import requests
-from streamlit_extras.app_logo import add_logo
 import logging 
-from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
+from modules.nav import SideBarLinks
+
 st.set_page_config (page_title="Community Event Manager", page_icon="💻")
-
-add_logo("assets/logo.png", height=400)
-
 SideBarLinks()
 
 st.header("All Community Events", divider='green')
 
-#gets all community events
+#gets all data
 data = {} 
 data = requests.get('http://api:4000/c/city_council').json()
 logger.info(f'Data is: {data}')
 for row in data:
   row["eventDate"] = ' '.join(row["eventDate"].split(' ')[:4])
-
 logger.info(type(data))
 
-#edits the column name
+#edits the data layout and format
 edited_data = st.data_editor(
     data,
     column_config={
         "name": "Event Name",
         "eventDate": "Date",
-        "duration": "Duration in Hours",
+        "duration": st.column_config.NumberColumn(
+            "Duration",
+             format="%d Hours",
+         ),
         "eventID" : "Event ID",
         "venueCapacity":"Venue Capacity"
     },
+    use_container_width= True,
+    column_order=("eventID", "name", "eventDate","duration", "venuCapacity")
 )
 
 col1, col2, col3 = st.columns(3, gap = "medium")
-
 
 # Creating an Event Page
 with col1:

@@ -1,16 +1,15 @@
 import logging
 import requests
+import streamlit as st
+
 logger = logging.getLogger()
 
-import streamlit as st
 from modules.nav import SideBarLinks
 
 st.set_page_config(layout = 'wide', page_title="City Council Home", page_icon="🏠")
-
-# Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-st.title(f"Welcome, {st.session_state['first_name']}.")
+st.title(f"Welcome {st.session_state['first_name']}")
 
 col1, col2 = st.columns(2)
 
@@ -49,15 +48,20 @@ with col1:
     column_config={
         "name": "Event Name",
         "eventDate": "Date",
+        "eventID": "Event ID",
     },
+    use_container_width= True,
+    column_order=("eventID", "name", "eventDate")
 )
 
 # general dashboard aestethics 
 with col2:
- st.image("https://i.imgur.com/TbrU8c8.jpeg")
+ st.image("https://i.imgur.com/TbrU8c8.jpeg" ,use_column_width="auto")
 
  st.subheader("To-Do", divider="green")
  task1 = st.checkbox("Check Post Analytics")
- task2 = st.checkbox("Consult Volunteers from this week's appointments")
+ task2 = st.checkbox("Read Volunteer Notes")
  task3 = st.checkbox("Plan the Annual Town Hall")
  task4 = st.checkbox("University Tour for Local Students")
+ task5 = st.checkbox("Add New Community Events to the Bulletin")
+ task6 = st.checkbox("Set up Election Campaign Posts")

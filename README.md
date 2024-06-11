@@ -23,8 +23,8 @@ to activate the (in the `./app` directory), (in the `./api` directory), (in the 
 
 Once the containers are started and properly running, please click on the link witin the front-end, which is hosted at 
 
-```bash
-    http://localhost:8501/
+```
+    http://localhost:8501
 ```
 
 ## API Notes

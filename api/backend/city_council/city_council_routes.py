@@ -39,7 +39,7 @@ def get_certainEvents():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('select eventDate, name from communityEvent ORDER BY eventDate ASC LIMIT 8')
+    cursor.execute('select eventDate, name, eventID from communityEvent ORDER BY eventDate DESC LIMIT 8')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -157,7 +157,6 @@ def add_appointment():
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    
     return 'New Appointment'
 
 # Edit the appointment
@@ -198,7 +197,7 @@ def delete_post(post_id):
     cursor.execute(query)
     db.get_db().commit()
     
-    return 'Event cancelled!'
+    return 'Post Deleted!'
 
 # gets the posts
 @city_council.route('/city_council/bulletin', methods=['GET'])

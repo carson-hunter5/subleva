@@ -1,15 +1,10 @@
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
+
 from modules.nav import SideBarLinks
 
 # Set page configuration first
-st.set_page_config(page_title="About")
-
-# Show appropriate sidebar links for the role of the currently logged in user
+st.set_page_config(page_title="About Subleva",page_icon= "🧠")
 SideBarLinks()
-
-# Add logo
-add_logo("assets/logo.png", height=400)
 
 # Write content
 st.write("# About Subleva")
@@ -21,19 +16,29 @@ st.markdown(
     to mitigate this contention by providing a quantitative approach to understanding
     migration from both perspectives and offers resources for migrants. Our app focuses
     on visualizing and predicting migration patterns, to offer stakeholders a data-driven
-    perspective on refugees and refugee stories.  
+    perspective on refugees and refugee stories. 
 
-    Created By:
 
-    Carson Hunter    
-
-    Ivionna Jordan 
-             
-    Dylan Sacks
     """
 )
 
-if st.button('Back Home', 
+st.subheader("**Concept and Creation By**:"  )
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+  st.write("")
+  st.write(":green[**Carson Hunter**]")
+
+with col2:
+  st.write("")
+  st.write(":green[**Ivionna Jordan**]")
+
+with col3:
+  st.write("")
+  st.write(":green[**Dylan Sacks**]")
+
+if st.button('Subleva Home', 
              type='primary',
              use_container_width=True):
   st.switch_page('Home.py')

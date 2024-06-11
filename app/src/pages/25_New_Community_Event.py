@@ -2,25 +2,22 @@ import streamlit as st
 import requests
 import datetime
 import requests
-from streamlit_extras.app_logo import add_logo
+
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="Community Event Manager", page_icon="💻")
-
-add_logo("assets/logo.png", height=400)
-
 SideBarLinks()
 
 st.header("New Community Event", divider='green')
 
 # Creates an Event
-event_name = st.text_input("Event Name")
+event_name = st.text_input("Event Name", max_chars=50)
 eventDate = st.date_input("Event Date", value=datetime.date.today())
-duration = st.number_input("Duration",value=0, step=1, placeholder="Type a value...")
-venue_capacity = st.number_input("Venue Capcity",value=0, step=1, placeholder="Type a value...")
+duration = st.number_input("Duration",value=0, step=1, min_value= 0,max_value=10,placeholder="Type a value...")
+venue_capacity = st.number_input("Venue Capcity",value=0, step=1,min_value= 0, placeholder="Type a value...")
 
 #submits the event info
-if st.button("Submit"):
+if st.button("Submit", type="primary", use_container_width=True):
     if event_name and eventDate and duration and venue_capacity:
         post_data = {
             "eventName" : event_name,
@@ -41,6 +38,6 @@ if st.button("Submit"):
     del st.session_state["message"]
 
 if st.button('Back', 
-             type='primary',
+             type='secondary',
              use_container_width=True):
   st.switch_page('pages/23_Community_Events.py')

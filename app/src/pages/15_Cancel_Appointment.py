@@ -1,13 +1,12 @@
 import logging
 import requests
+import streamlit as st
+
 logger = logging.getLogger(__name__)
 
-import streamlit as st
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title=" Cancel Appointment", page_icon="📌")
-
-# Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
 # Appointment Deletion  
@@ -16,7 +15,7 @@ st.subheader("Cancel an Appointment", divider='green')
 
 attendeeID = st.session_state["id"]
 
-#gets all the appointments from a certain migrant based on their id from the table of appointmnet attendees 
+#gets all the data
 data = {} 
 data = requests.get(f"""http://api:4000/m/migrant/appointments_cancel/{attendeeID}""").json()
 logger.info(f'Data is: {data}')
@@ -25,16 +24,16 @@ for row in data:
 
 logger.info(type(data))
 
-#edits the column name
+#edits the data layout and format
 edited_data = st.data_editor(
     data,
     column_config={
         "appDate": "Date",
         "appointmentID": "Appointment ID",
-        "volunteerID": "Volunteer ID",
-        "subject" : "Topic",
-        "weekday" : "Weekday"
+        "name": "Volunteer Name",
     },
+    use_container_width= True,
+    column_order=("appointmentID", "apptDate", "name")
 )
 
 json_data = data[0]
@@ -43,10 +42,10 @@ logger.info(type(json_data))
 
 if data:
     appointment_ids = [row["appointmentID"] for row in data]
-    appointment_to_delete = st.selectbox("Select an Appointment ID to Delete:", options=appointment_ids)
+    appointment_to_delete = st.selectbox("Select an Appointment ID to Delete:", options=appointment_ids,index=None)
 
 #cancels the appointment by  removes the appointment id from the attendees' table 
-if st.button("Cancel Appointment"):
+if st.button("Cancel Appointment", type = 'primary', use_container_width=True):
       response = requests.delete(f"http://api:4000/m/migrant/appointment_delete/{attendeeID}/{appointment_to_delete}")
       if response.status_code == 200:
                 st.session_state["message"] = ":green[Appointment Cancelled]"
@@ -59,6 +58,6 @@ if st.button("Cancel Appointment"):
 
 
 if st.button('Back', 
-             type='primary',
+             type='secondary',
              use_container_width=True):
   st.switch_page('pages/11_Appointments.py')

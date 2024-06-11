@@ -1,22 +1,18 @@
 import streamlit as st
 import requests
-from streamlit_extras.app_logo import add_logo
+
 from modules.nav import SideBarLinks
 
 st.set_page_config (page_title="Community Bulletin", page_icon="📝")
 SideBarLinks()
-add_logo("assets/logo.png", height=400)
 
 st.header("Recent Bulletin Posts", divider='green')
 
 # getting all the posts 
 data = {} 
-try:
-  data = requests.get('http://api:4000/m/migrant/posts').json()
-except:
-  st.write("**Important**: Could not connect to database")
+data = requests.get('http://api:4000/m/migrant/posts').json()
 
-# edits the column names
+# edits the data layout and format
 edited_data = st.data_editor(
     data,
     column_config={
@@ -24,6 +20,8 @@ edited_data = st.data_editor(
         "displayName": "Display Name",
         "postContent": "Post",
     },
+    use_container_width= True,
+    column_order=("displayName", "postContent", "createdAt")
 )
 
 col1, col2 = st.columns(2, gap = "medium")
@@ -32,10 +30,10 @@ col1, col2 = st.columns(2, gap = "medium")
 with col1:
  st.header("**Create a Post**", divider='green')
  migrantID = st.session_state["id"]
- displayName = st.text_input("Display Name")
- post_content = st.text_input("Post Content")
+ displayName = st.text_input("Display Name", max_chars=12)
+ post_content = st.text_area("Post Content",height = 130, max_chars=500)
 
- if st.button("Submit"):
+ if st.button("Submit", type= "primary", use_container_width=True):
     if post_content and displayName and migrantID:
         post_data = {
             "postContent" : post_content,
@@ -55,6 +53,4 @@ with col1:
 # general aesthetic information
 with col2:
    st.header("Trending Post", divider = 'green')
-   st.image("https://i.imgur.com/Hcmqbu2.jpeg")
-   st.caption("Congrats to my baby sister Samara fopr graduating from Rutgers University!")
-   st.caption("#firstgen    #youdidit    #classof2k23")
+   st.image("https://i.imgur.com/Hcmqbu2.jpeg",use_column_width=True, caption="Congrats to my baby sister Samara fopr graduating from Rutgers University!")

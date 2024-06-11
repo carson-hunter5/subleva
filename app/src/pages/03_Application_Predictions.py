@@ -1,16 +1,16 @@
 import logging
-logger = logging.getLogger()
-
-import streamlit as st
-from modules.nav import SideBarLinks
 import requests
 import pandas as pd
+import streamlit as st
+
+logger = logging.getLogger()
+
+from modules.nav import SideBarLinks
 
 st.set_page_config (page_title= "Application Predictions", page_icon="📊")
+SideBarLinks()
 
 st.header("**Asylum Application Statistics**", divider='green')
-
-SideBarLinks()
 
 country_list  = requests.get('http://api:4000/i/countrylist').json()
 country_dict = pd.DataFrame(country_list)
@@ -26,8 +26,8 @@ country_of_asylum  = st.selectbox(label="Select a Country of Asylum", options = 
 num_decisions = st.number_input(label="Number of Decisions",step=1)
 
 # Button to submit and use the model02 to predict the acceptance rate
-if st.button("Submit"):
+if st.button("Submit",type="primary" ,use_container_width=True):
     response = requests.get(f"""http://api:4000/i/testing/{year}/{country_of_origin}/{country_of_asylum}/{num_decisions}""")
     prediction = response.json()['result']
     prediction_percentage = round(prediction * 100,2)
-    st.write(f"The predicted acceptance rate is {prediction_percentage}%.")
+    st.write(f"The Predicted Acceptance Rate is {prediction_percentage}%.")

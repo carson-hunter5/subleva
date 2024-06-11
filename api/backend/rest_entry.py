@@ -1,13 +1,13 @@
 import logging
+import os
+
 logging.basicConfig(level=logging.DEBUG)
 
 from flask import Flask
-
 from backend.db_connection import db
 from backend.city_council.city_council_routes import city_council
 from backend.immigration_official.immigration_officer_routes import immigration_official
 from backend.migrant.migrant_routes import migrant
-import os
 from dotenv import load_dotenv
 
 def create_app():
