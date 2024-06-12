@@ -31,7 +31,7 @@ if isinstance(data, list) and all(isinstance(item, dict) for item in data):
 
 #selects the post id from the list of ids in the dropdown
     if post_ids:
-        id_to_delete = st.selectbox("Select a Post ID", options=post_ids, index=None)
+        id_to_delete = st.selectbox("Select a Post ID", index=None, options=post_ids)
         delete_button = st.button('Delete Post', type="primary", use_container_width=True)
 
         if delete_button:

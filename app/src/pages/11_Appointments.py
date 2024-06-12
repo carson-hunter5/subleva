@@ -46,7 +46,6 @@ edited_data = st.data_editor(
 col1, col2 = st.columns(2, gap = "medium")
 
 # Creating an Appointment
-
 with col1:
  if st.button('New Appointment', 
              type='primary',
@@ -54,7 +53,6 @@ with col1:
   st.switch_page('pages/14_Schedule_Appointment.py')
 
 # Appointment Deletion 
-
 with col2: 
  if st.button('Delete Appointment', 
              type='primary',

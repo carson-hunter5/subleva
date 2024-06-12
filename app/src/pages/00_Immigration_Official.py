@@ -44,10 +44,9 @@ with col2:
   )
 
   opinion = st.select_slider(
-    "How satsfied were you with last Tuesday **June 4th's** guest lecture?",
-    options=["Highly Dissatsfied", "Dissatsfied", "Neutral", "Sastfied", "Highly Satsfied"],
+    "On a scale of 1-10, how satsfied were you with last Tuesday **June 4th's** guest lecture?",
+    options=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     )
-  st.write("")
   st.write("You voted:", opinion)
 
   st.subheader("To-Do", divider="green")
